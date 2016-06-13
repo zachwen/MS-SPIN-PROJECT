@@ -34,7 +34,7 @@
         position:absolute;
     }
         .fa-times{
-            color: white;
+            color: red;
         }
 
     </style>
@@ -68,7 +68,7 @@
 
     <script>
         //hide the X at the beginning and show it in rendering mode
-//        $(".topleft").hide();
+        $(".topleft").hide();
         
         $(".custom-select").each(function() {
           var classes = $(this).attr("class"),
@@ -105,8 +105,9 @@
           $(this).parents(".custom-select").removeClass("opened");
           $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
             
-            //hide the selection menu and then 
+            //hide the selection menu and then show the reload button
             $(".center").hide();
+            $(".topleft").show();
             loadfile('js/bundle.js',$(this).text(), renderMolecules,function(xhr) { console.error(xhr);});  
         });
 
