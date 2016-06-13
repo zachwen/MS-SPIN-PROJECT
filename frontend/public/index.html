@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <title>MS-SPIN-Project</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./foundation6_lib/css/foundation.css">
+
+    <!--Angular-->
+    <script src="./lib/angular/angular.min.js"></script>
+    <script src="./lib/angular-route/angular-route.min.js"></script>
+    <script src="./js/app.js"></script>    
+    <script src="./js/controllers.js"></script>
+    <script src="./js/services.js"></script>
+
+
+    <style>
+        body        { padding-top:20px; }
+        .background-img{
+            background-image:linear-gradient(
+              rgba(0, 0, 0, 0.3),
+              rgba(0, 0, 0, 0.5)
+            ),url("Images/crystals_schleife.png");
+            background-size: 100% 100%;
+            background-repeat:no-repeat;   
+            background-attachment: fixed;
+            width: 100%;
+            height: 500px;
+        }
+        .background-text{
+            font-size: 50px;
+            font-weight: 700;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            text-align: center;
+        }
+        .nav-title{
+            font-size: 38px;
+            color: #1D3E48;
+            font-family: sans-serif;
+        }
+        .nav-text{
+            margin-top: 10px;
+        }
+        .nav-img{
+            opacity: 0.8;
+            height:50px;
+            width: 50px;
+            float: left;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <nav>
+        <div class="title-bar" data-responsive-toggle="nav-menu" data-hide-for="medium">
+          <button class="menu-icon" type="button" data-toggle></button>
+          <div class="title-bar-title">360-Molecules</div>
+        </div>
+        <div class="top-bar" id="nav-menu">
+            <div class="top-bar-title">
+              <img src="Images/nav-pic.jpg" class="nav-img"/> 
+              <strong class="nav-title">&nbsp 360-Molecules</strong>
+            </div>
+            
+              <div class="top-bar-right nav-text">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    
+                    <li name = "nav_bar_items" ><a href="/Project.html"><i class="fa fa-eye fa-2x" aria-hidden="true"></i>Visualization</a></li>
+
+                    <li name = "nav_bar_items" ><a href="/signup.html"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>Signup</a></li>
+                    <li name = "nav_bar_items" ><a href="/login.html"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>Login</a></li>
+
+                </ul>
+              </div>
+        </div>        
+    </nav>
+
+
+    
+    <div class="row fullWidth" >
+        <div class="small-12 columns background-img">   
+        </div>
+    </div>        
+    
+<!-- 
+
+
+
+    <div class="container">
+        <div class="text-center background-text">
+            <h1>Login</h1>
+            <a href="/login.html" class="button">Login</a>
+            <a href="/signup.html" class="button">Signup</a>
+            <a href="/profile.html" class="button">Profile</a>
+            <a href="/logout" class="button">Logout</a>
+        </div>
+    </div>
+ -->
+ 
+
+    <div>
+        <footer class="footer columns large-12 large-centered">
+            <div class="row" style="text-align:center; margin: 0 auto;">
+                <a href="https://github.com/toheebster/nowServing"><i class="fa fa-3x fa-github" style="color: #2CC185"></i></a>
+            </div>
+            <div class="row" style="text-align: center; margin: 0 auto;">
+                © 2016 MS-SPIN-Project. All Rights Reserved.
+            </div>
+        </footer>
+    </div>
+
+
+
+
+    <!-- Scripts -->
+    <script src="./lib/jquery-2.1.3.min/index.js"></script>
+    <script src="./foundation6_lib/js/foundation.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script> 
+        $(document).foundation();
+    </script>
+    <script src="http://localhost:35729/livereload.js"></script>
+
+</body>
+
+
+</html>

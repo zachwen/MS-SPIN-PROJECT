@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Visualization</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">    
+    <style>
+      body {
+        margin: 0px;
+        overflow: hidden;
+
+        background: #ededed;
+        font-family: 'Open Sans', sans-serif; 
+        position:relative;
+      }
+      #example {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+    .center {
+      position: absolute;
+      display: inline-block;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .topleft{
+        top:0px;
+        right: 0px;
+        position:absolute;
+    }
+        .fa-times{
+            color: white;
+        }
+
+    </style>
+    
+    <link rel="stylesheet" href="css/styles.css"> 
+</head>
+<body>
+    <div id=example style=position:absolute; ></div>
+    
+    
+    <div class="center">
+      <select name="sources" id="sources" class="custom-select sources" placeholder="Visualized Molecules">
+        <option value="CH3NH3PbI3">CH3NH3PbI3</option>
+        <option value="BNZnO">BNZnO</option>
+        <option value="CuZnSnS">CuZnSnS</option>
+      </select>
+    </div>
+    
+    
+    <div class="topleft">
+        <i class="fa fa-times fa-3x" aria-hidden="true"></i>
+    </div>
+    
+    
+
+    <script src="./lib/jquery-2.1.3.min/index.js"></script>
+    <script src="lib/third-party/threejs/three.min.js"></script>
+    <script src="lib/third-party/threejs/StereoEffect.js"></script>
+    <script src="lib/third-party/threejs/DeviceOrientationControls.js"></script>
+    <script src="lib/third-party/threejs/OrbitControls.js"></script>
+
+    <script>
+        //hide the X at the beginning and show it in rendering mode
+//        $(".topleft").hide();
+        
+        $(".custom-select").each(function() {
+          var classes = $(this).attr("class"),
+              id      = $(this).attr("id"),
+              name    = $(this).attr("name");
+          var template =  '<div class="' + classes + '">';
+              template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
+              template += '<div class="custom-options">';
+              $(this).find("option").each(function() {
+                template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
+              });
+          template += '</div></div>';
+
+          $(this).wrap('<div class="custom-select-wrapper"></div>');
+          $(this).hide();
+          $(this).after(template);
+        });
+        $(".custom-option:first-of-type").hover(function() {
+          $(this).parents(".custom-options").addClass("option-hover");
+        }, function() {
+          $(this).parents(".custom-options").removeClass("option-hover");
+        });
+        $(".custom-select-trigger").on("click", function() {
+          $('html').one('click',function() {
+            $(".custom-select").removeClass("opened");
+          });
+          $(this).parents(".custom-select").toggleClass("opened");
+          event.stopPropagation();
+        });
+        $(".custom-option").on("click", function() {
+          $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
+          $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
+          $(this).addClass("selection");
+          $(this).parents(".custom-select").removeClass("opened");
+          $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
+            
+            //hide the selection menu and then 
+            $(".center").hide();
+            loadfile('js/bundle.js',$(this).text(), renderMolecules,function(xhr) { console.error(xhr);});  
+        });
+
+        
+        $(".topleft").click(function(){location.reload();});
+        
+        function renderMolecules(data, filename){
+            console.log("reached");
+            data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
+            eval(data);
+        }
+        
+        function loadfile(path,filename, success, error)
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function()
+            {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        if (success)
+                            success(xhr.responseText,filename);
+                    } else {
+                        if (error)
+                            error(xhr);
+                    }
+                }
+            };
+
+            xhr.open("GET", path, true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
+

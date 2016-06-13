@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(bodyParser());
 
 app.use(session({ secret: 'passport demo' }));
-app.use(express.static(__dirname + '/frontend'));
+app.use(express.static(__dirname + '/frontend/public'));
 
 
 app.use(passport.initialize());
