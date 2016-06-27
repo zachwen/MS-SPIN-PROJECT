@@ -16,6 +16,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser());
 
+
 app.use(session({ secret: 'passport demo' }));
 app.use(express.static(__dirname + '/frontend/public'));
 

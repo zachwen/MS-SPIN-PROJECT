@@ -13,7 +13,7 @@
     <script src="./js/app.js"></script>    
     <script src="./js/controllers.js"></script>
     <script src="./js/services.js"></script>
-
+	
 
     <style>
         body        { padding-top:20px; }
@@ -43,7 +43,7 @@
             font-family: sans-serif;
         }
         .nav-text{
-            margin-top: 10px;
+            margin-top: 0px;
         }
         .nav-img{
             opacity: 0.8;
@@ -55,10 +55,9 @@
     </style>
 </head>
 
-<body>
+<body ng-app="mp4" style="height:100%">
 
-
-    <nav>
+    <nav ng-controller="homePageController">
         <div class="title-bar" data-responsive-toggle="nav-menu" data-hide-for="medium">
           <button class="menu-icon" type="button" data-toggle></button>
           <div class="title-bar-title">360-Molecules</div>
@@ -74,8 +73,11 @@
                     
                     <li name = "nav_bar_items" ><a href="/Project.html"><i class="fa fa-eye fa-2x" aria-hidden="true"></i>Visualization</a></li>
 
-                    <li name = "nav_bar_items" ><a href="/signup.html"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>Signup</a></li>
-                    <li name = "nav_bar_items" ><a href="/login.html"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>Login</a></li>
+                    <li name = "nav_bar_items" ng-hide="showLogout()" ><a href="/signup.html"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>Signup</a></li>
+                    <li name = "nav_bar_items" ng-hide="showLogout()" ><a href="/login.html"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>Login</a></li>
+
+                    <li name = "nav_bar_items" ng-show="showLogout()" ><a href="/profile.html"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>Upload</a></li>
+                    <li name = "nav_bar_items" ng-show="showLogout()" ><a href="/logout"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>Logout</a></li>
 
                 </ul>
               </div>
@@ -88,27 +90,11 @@
         <div class="small-12 columns background-img">   
         </div>
     </div>        
-    
-<!-- 
-
-
-
-    <div class="container">
-        <div class="text-center background-text">
-            <h1>Login</h1>
-            <a href="/login.html" class="button">Login</a>
-            <a href="/signup.html" class="button">Signup</a>
-            <a href="/profile.html" class="button">Profile</a>
-            <a href="/logout" class="button">Logout</a>
-        </div>
-    </div>
- -->
- 
 
     <div>
         <footer class="footer columns large-12 large-centered">
             <div class="row" style="text-align:center; margin: 0 auto;">
-                <a href="https://github.com/toheebster/nowServing"><i class="fa fa-3x fa-github" style="color: #2CC185"></i></a>
+                <a href="https://github.com/Randolph-zeng/MS-SPIN-PROJECT"><i class="fa fa-3x fa-github" style="color: #2CC185"></i></a>
             </div>
             <div class="row" style="text-align: center; margin: 0 auto;">
                 © 2016 MS-SPIN-Project. All Rights Reserved.
@@ -116,17 +102,12 @@
         </footer>
     </div>
 
-
-
-
     <!-- Scripts -->
     <script src="./lib/jquery-2.1.3.min/index.js"></script>
     <script src="./foundation6_lib/js/foundation.min.js"></script>
-    <script src="./js/script.js"></script>
     <script> 
         $(document).foundation();
     </script>
-    <script src="http://localhost:35729/livereload.js"></script>
 
 </body>
 

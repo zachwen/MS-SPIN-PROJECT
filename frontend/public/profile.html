@@ -1,41 +1,234 @@
 <!doctype html>
 <html>
 <head>
-    <title>Passport Demo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/css/foundation.min.css">
+    <title>MS-SPIN-Project</title>
+    <link rel="stylesheet" href="./foundation6_lib/css/foundation.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    <script type="text/javascript" src="./js/app.js"></script>
 
-
+    <script src="./lib/angular/angular.min.js"></script>
+    <script src="./lib/angular-route/angular-route.min.js"></script>
+    <script src="./js/app.js"></script>    
+    <script src="./js/controllers.js"></script>
+    <script src="./js/services.js"></script>
+	
+    
+    
     <style>
-        body        { padding-top:80px; word-wrap:break-word; }
+   
+
+*, *:after, *:before {
+  box-sizing: border-box;
+  font-family: arial;
+}
+
+body {
+  text-align: center;
+  padding-top: 25px;
+padding-top:80px; word-wrap:break-word;     
+}
+
+.btn {
+  width: 150px;
+  height: 150px;
+  background: #ddd;
+  position: relative;
+  text-align: center;
+  margin: 15px;
+  overflow: hidden;
+  border-radius: 100%;
+  display: inline-block;
+}
+.btn.download {
+  background: #00CCFF;
+}
+.btn.download .cloud {
+  box-shadow: 0px 0px #00a3cc, 1px 1px #00a3cc, 2px 2px #00a3cc, 3px 3px #00a3cc, 4px 4px #00a3cc, 5px 5px #00a3cc, 6px 6px #00a3cc, 7px 7px #00a3cc, 8px 8px #00a3cc, 9px 9px #00a3cc, 10px 10px #00a3cc, 11px 11px #00a3cc, 12px 12px #00a3cc, 13px 13px #00a3cc, 14px 14px #00a3cc, 15px 15px #00a3cc, 16px 16px #00a3cc, 17px 17px #00a3cc, 18px 18px #00a3cc, 19px 19px #00a3cc, 20px 20px #00a3cc, 21px 21px #00a3cc, 22px 22px #00a3cc, 23px 23px #00a3cc, 24px 24px #00a3cc, 25px 25px #00a3cc, 26px 26px #00a3cc, 27px 27px #00a3cc, 28px 28px #00a3cc, 29px 29px #00a3cc, 30px 30px #00a3cc, 31px 31px #00a3cc, 32px 32px #00a3cc, 33px 33px #00a3cc, 34px 34px #00a3cc, 35px 35px #00a3cc, 36px 36px #00a3cc, 37px 37px #00a3cc, 38px 38px #00a3cc, 39px 39px #00a3cc, 40px 40px #00a3cc, 41px 41px #00a3cc, 42px 42px #00a3cc, 43px 43px #00a3cc, 44px 44px #00a3cc, 45px 45px #00a3cc, 46px 46px #00a3cc, 47px 47px #00a3cc, 48px 48px #00a3cc, 49px 49px #00a3cc, 50px 50px #00a3cc;
+}
+.btn.download .arrow {
+  -webkit-animation: download 1s linear infinite;
+  animation: download 1s linear infinite;
+}
+.btn.upload {
+  background: #F49845;
+}
+.btn.upload .cloud {
+  box-shadow: 0px 0px #f17d15, 1px 1px #f17d15, 2px 2px #f17d15, 3px 3px #f17d15, 4px 4px #f17d15, 5px 5px #f17d15, 6px 6px #f17d15, 7px 7px #f17d15, 8px 8px #f17d15, 9px 9px #f17d15, 10px 10px #f17d15, 11px 11px #f17d15, 12px 12px #f17d15, 13px 13px #f17d15, 14px 14px #f17d15, 15px 15px #f17d15, 16px 16px #f17d15, 17px 17px #f17d15, 18px 18px #f17d15, 19px 19px #f17d15, 20px 20px #f17d15, 21px 21px #f17d15, 22px 22px #f17d15, 23px 23px #f17d15, 24px 24px #f17d15, 25px 25px #f17d15, 26px 26px #f17d15, 27px 27px #f17d15, 28px 28px #f17d15, 29px 29px #f17d15, 30px 30px #f17d15, 31px 31px #f17d15, 32px 32px #f17d15, 33px 33px #f17d15, 34px 34px #f17d15, 35px 35px #f17d15, 36px 36px #f17d15, 37px 37px #f17d15, 38px 38px #f17d15, 39px 39px #f17d15, 40px 40px #f17d15, 41px 41px #f17d15, 42px 42px #f17d15, 43px 43px #f17d15, 44px 44px #f17d15, 45px 45px #f17d15, 46px 46px #f17d15, 47px 47px #f17d15, 48px 48px #f17d15, 49px 49px #f17d15, 50px 50px #f17d15;
+}
+.btn.upload .arrow {
+  -webkit-animation: uplaod 1s linear infinite;
+  animation: uplaod 1s linear infinite;
+}
+.btn.upload .arrow:after {
+  top: auto;
+  bottom: 100%;
+  border-color: transparent transparent #97CA03 transparent;
+}
+
+.cloud {
+  width: 100px;
+  height: 40px;
+  position: relative;
+  background: #fff;
+  display: inline-block;
+  border-radius: 50px;
+  margin: 60px auto 0;
+  box-shadow: 0px 0px #00a3cc, 1px 1px #00a3cc, 2px 2px #00a3cc, 3px 3px #00a3cc, 4px 4px #00a3cc, 5px 5px #00a3cc, 6px 6px #00a3cc, 7px 7px #00a3cc, 8px 8px #00a3cc, 9px 9px #00a3cc, 10px 10px #00a3cc, 11px 11px #00a3cc, 12px 12px #00a3cc, 13px 13px #00a3cc, 14px 14px #00a3cc, 15px 15px #00a3cc, 16px 16px #00a3cc, 17px 17px #00a3cc, 18px 18px #00a3cc, 19px 19px #00a3cc, 20px 20px #00a3cc, 21px 21px #00a3cc, 22px 22px #00a3cc, 23px 23px #00a3cc, 24px 24px #00a3cc, 25px 25px #00a3cc, 26px 26px #00a3cc, 27px 27px #00a3cc, 28px 28px #00a3cc, 29px 29px #00a3cc, 30px 30px #00a3cc, 31px 31px #00a3cc, 32px 32px #00a3cc, 33px 33px #00a3cc, 34px 34px #00a3cc, 35px 35px #00a3cc, 36px 36px #00a3cc, 37px 37px #00a3cc, 38px 38px #00a3cc, 39px 39px #00a3cc, 40px 40px #00a3cc, 41px 41px #00a3cc, 42px 42px #00a3cc, 43px 43px #00a3cc, 44px 44px #00a3cc, 45px 45px #00a3cc, 46px 46px #00a3cc, 47px 47px #00a3cc, 48px 48px #00a3cc, 49px 49px #00a3cc, 50px 50px #00a3cc;
+}
+.cloud:after, .cloud:before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  top: -20px;
+  background: #fff;
+  left: 5px;
+}
+.cloud:before {
+  width: 40px;
+  height: 40px;
+  left: 50px;
+}
+
+.arrow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 5;
+  top: 10px;
+  width: 15px;
+  height: 10px;
+  background: #97CA03;
+  display: inline-block;
+}
+.arrow:after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 100%;
+  border: 15px solid transparent;
+  border-top-color: #97CA03;
+}
+@-webkit-keyframes download {
+  0% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+  100% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+@keyframes download {
+  0% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+  100% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes uplaod {
+  0% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+  100% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+@keyframes uplaod {
+  0% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+  100% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+        
+input {
+    float:left;
+    display: inline-block;
+}        
+        
+        
     </style>
 </head>
-<body ng-app="passportApp">
-<div ng-controller="profileController" class="container">
-
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="button small" ng-show="profile">Logout</a>
-    </div>
-
+<body ng-app="mp4">
+<div ng-controller="homePageController" class="container">
+    
     <div class="row">
-        <!-- PROFILE INFORMATION -->
-            <div class="well" ng-show="profile">
-                <h3><span class="fa fa-user"></span> Profile</h3>
-
-                    <p>
-                        <strong>id</strong>: {{user._id}}<br>
-                        <strong>email</strong>: {{user.local.email}}<br>
-                        <strong>password</strong>: {{user.local.password}}
-                    </p>
+        <div class="columns small-offset-3 small-6" >
+            Upload the associated vesta and xyz files of the molecules you would like to render here. Please make sure the filename are only consist of letters and numbers(e.g.,CH3NH3PbI3.vesta) .
+                
+        </div>
+    </div>
+<div>
+      <form id="newService" class="small-offset-3 small-6 columns" action="/fs/upload" method="post" enctype="multipart/form-data">
+<!--
+          <div class="">
+           <br>
+            <input type="file" name="dataFiles"><br>
+          </div>
+-->
+          
+            <div class="btn download">
+              <div class="cloud">
+                <div class="arrow"></div>
+              </div>
             </div>
-            <div class="jumbotron text-center" ng-hide="profile">
-                <a href="/login.html" class="button">Login</a>
-                <a href="/signup.html" class="button">Signup</a>
+          
+            <div class="btn upload">
+              <div class="cloud">
+                <div class="arrow"></div>
+              </div>
             </div>
+          <div class="row">
+              <div class="small-6 columns"><input type="file" name="dataFiles"></div>
+              <div class="small-6 columns"><input type="file" name="dataFiles"> </div>
+          </div>
 
-</div>
+          <div class="row" style="text-align:center"><button class="expanded button" type="submit">Submit</button></div>
+      </form>    
+</div>    
+
+</div>    
+    
+<!--
+    <div class="row">
+        <div class="columns small-offset-3 small-6" >
+            Upload the associated vesta and xyz files of the molecules you would like to render here. Please make sure the filename are only consist of letters and numbers(e.g.,CH3NH3PbI3.vesta) .
+                
+        </div>
+    </div>
+    
+    
+    <div class="row">
+      <form id="newService" class="small-offset-4 small-4 columns" action="/fs/upload" method="post" enctype="multipart/form-data">
+          <div class="">
+            <input type="file" name="dataFiles"><br>
+            <input type="file" name="dataFiles"><br>
+          </div>
+
+          <div class="row" style="text-align:center"><button class="expanded button" type="submit">Submit</button></div>
+      </form>
+    </div> 
+-->
+    
+    
+    <script src="./lib/jquery-2.1.3.min/index.js"></script>
+    <script src="./foundation6_lib/js/foundation.min.js"></script>
+    <script> 
+        $(document).foundation();
+    </script>
 </body>
 </html>
