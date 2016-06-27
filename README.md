@@ -22,9 +22,14 @@ Have a fully functional website supported by MEAN stack web development tools no
 The website is currently running on a free server on digital ocean provided by amazon student package. 
 The website for this project is 104.236.96.247:3000. 
 
+Upload page and rendering page significantly changed.
+
 Added feature:
 
 Support both ball-stick and Polyhedron mode of molecules structure viewing
 Support User signup and login.
 Support vesta and xyz files uploading to backend (Only logged in user are allowed to upload)
+Molecules grid are now dynamically generated according to the files in the backend, meaning when a new molecule is uploaded(should include both vesta and xyz files), a new grid will show up in the visualization page.
+Rendering option for a single molecules now include 1. auto-spinning or head-tracking, 2. audio explanation on or off, 3. polyhedron mode on or off. 
+
 
