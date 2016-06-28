@@ -456,7 +456,7 @@ Cm	:	1.0	}
                 }
             }
             if(polyhedron.length != 0 ){
-                createPolyhedron(max_dist,polyhedron);
+                createPolyhedron(max_dist,polyhedron,atom_a);
             }
                 
         }        
@@ -465,7 +465,7 @@ Cm	:	1.0	}
 
 
 
-    function createPolyhedron(max_dist,polyhedron){
+    function createPolyhedron(max_dist,polyhedron,central_atom){
         //This function creates the polyhedron
         var triangleGeometry = new THREE.Geometry();
         for(var j = 0; j < polyhedron.length; j++){
@@ -482,15 +482,16 @@ Cm	:	1.0	}
         }
 
         var triangleMaterial = new THREE.MeshBasicMaterial({ 
-             color:0x404040, 
+             color:atom_colors[central_atom], 
              side:THREE.DoubleSide,
              transparent:true,
              opacity:0.5
          }); 
-
+				
         var triangleMesh = new THREE.Mesh(triangleGeometry, triangleMaterial); 
-
-        scene.add(triangleMesh);         
+				var wireframe = new THREE.WireframeHelper( triangleMesh, 0xaaaaaa );
+        scene.add(triangleMesh); 
+				scene.add(wireframe);
         
     }
     

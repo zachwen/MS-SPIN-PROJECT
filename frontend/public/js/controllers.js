@@ -24,7 +24,7 @@ mp4Controllers.controller('homePageController', ['$scope','$http', function($sco
 }]);
 
 
-mp4Controllers.controller('renderPageController', ['$scope','$http', function($scope, $http) {
+mp4Controllers.controller('renderPageController', ['$scope','$http','$location', function($scope, $http,$location) {
 	
 		//for grid layout
     $scope.filesinfo = [];
@@ -63,7 +63,7 @@ mp4Controllers.controller('renderPageController', ['$scope','$http', function($s
 				}
 				else{
 					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-					data = data.replace("createPolyhedron(max_dist,polyhedron);",'');
+					data = data.replace("createPolyhedron(max_dist,polyhedron,atom_a);",'');
 					eval(data);
 				}
 				
@@ -87,8 +87,6 @@ mp4Controllers.controller('renderPageController', ['$scope','$http', function($s
 		$scope.reload = function(){
 			location.reload();
 		}
-		
-
     
 }]);
 
