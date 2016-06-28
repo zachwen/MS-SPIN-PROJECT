@@ -33,4 +33,8 @@ Support vesta and xyz files uploading to backend (Only logged in user are allowe
 --------------------------------------Updated in June 27------------------------------------------------------------
 Molecules grid are now dynamically generated according to the files in the backend, meaning when a new molecule is uploaded(should include both vesta and xyz files), a new grid will show up in the visualization page.
 
+Added a Homepage button to rendering page.
+Added a wireframe to the polyhedron mode in order to further distinguish the different faces of polyhedron
+Make the polyhedron faces have the same color with central atom.
+
 Rendering option for a single molecules now include 1. auto-spinning or head-tracking, 2. audio explanation on or off, 3. polyhedron mode on or off. 
