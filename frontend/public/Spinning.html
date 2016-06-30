@@ -54,6 +54,7 @@
       scene.add(camera);
 
 			controls = new THREE.DeviceOrientationControls( camera );
+			controls.connect();
 //      controls = new THREE.OrbitControls(camera, element);
 //      controls.rotateUp(Math.PI / 0.1);
 //      controls.target.set(
