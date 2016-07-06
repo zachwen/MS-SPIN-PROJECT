@@ -59,13 +59,17 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 				$scope.rendering = true;	
 				if($scope.polyhedron[filename] === true){
 					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-					eval(data); 
 				}
 				else{
 					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
 					data = data.replace("createPolyhedron(max_dist,polyhedron,atom_a);",'');
-					eval(data);
 				}
+				
+				if($scope.spinning[filename] === true){
+					console.log("self spiinnnnnnn");
+					data = data.replace("setAutoControls();","setOrientationControl();");
+				}
+				eval(data); 
 				
 			}).error(function (data, status, headers, config) {
 				console.log("get filesinfo error")
