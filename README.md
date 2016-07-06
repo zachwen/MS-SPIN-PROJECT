@@ -20,7 +20,6 @@ Functionalities to generate different atomic structure views such as Space-filli
 
 Have a fully functional website supported by MEAN stack web development tools now. 
 The website is currently running on a free server on digital ocean provided by amazon student package. 
-The website for this project is 104.236.96.247:3000. 
 
 Upload page and rendering page significantly changed.
 
