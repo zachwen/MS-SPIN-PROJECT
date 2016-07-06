@@ -20,7 +20,6 @@ Functionalities to generate different atomic structure views such as Space-filli
 
 Have a fully functional website supported by MEAN stack web development tools now. 
 The website is currently running on a free server on digital ocean provided by amazon student package. 
-The website for this project is 104.236.96.247:3000. 
 
 Upload page and rendering page significantly changed.
 
@@ -38,3 +37,7 @@ Added a wireframe to the polyhedron mode in order to further distinguish the dif
 Make the polyhedron faces have the same color with central atom.
 
 Rendering option for a single molecules now include 1. auto-spinning or head-tracking, 2. audio explanation on or off, 3. polyhedron mode on or off. 
+
+--------------------------------------Updated in July 05------------------------------------------------------------
+Device orientation control is considered deprecated on insecure origins....probably need to switch this web app to https protocol. 
+https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins

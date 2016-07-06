@@ -243,31 +243,7 @@ Cm	:	1.0	}
       camera.lookAt( scene.position );
       scene.add(camera);
 
-      controls = new THREE.OrbitControls(camera, element);
-      controls.rotateUp(Math.PI / 0.1);
-      controls.target.set(
-        camera.position.x + 1.0,
-        camera.position.y,
-        camera.position.z
-      );
-      controls.noZoom = true;
-      controls.noPan = true;
-      controls.autoRotate = false;
-
-      function setOrientationControls(e) {
-        if (!e.alpha) {
-          return;
-        }
-
-        controls = new THREE.DeviceOrientationControls(camera, true);
-        controls.connect();
-        controls.update();
-
-        element.addEventListener('click', fullscreen, false);
-
-        window.removeEventListener('deviceorientation', setOrientationControls);
-      }
-      window.addEventListener('deviceorientation', setOrientationControls, true);
+			setAutoControls();
 
       var light = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6);
       scene.add(light);
@@ -282,7 +258,24 @@ Cm	:	1.0	}
         );  
         
     }
-    
+		function setOrientationControl(){
+			  controls = new THREE.DeviceOrientationControls(camera, true);
+        controls.connect();
+        controls.update();
+		}
+		
+    function setAutoControls(){
+			controls = new THREE.OrbitControls(camera, element);
+      controls.rotateUp(Math.PI / 0.1);
+      controls.target.set(
+        camera.position.x + 1.0,
+        camera.position.y,
+        camera.position.z
+      );
+      controls.noZoom = true;
+      controls.noPan = true;
+      controls.autoRotate = false;
+		}
     
     //This function doesn't use JQuery at all. Just try to avoid loading any unnecessary library.
     function loadfile(path, success, error)
@@ -513,7 +506,7 @@ Cm	:	1.0	}
 
       camera.updateProjectionMatrix();
 
-      controls.update(dt);
+      controls.update();
     }
 
     function render(dt) {
@@ -524,8 +517,6 @@ Cm	:	1.0	}
       camera.position.y = Math.floor(Math.cos( timer ) * 200 - 250);
       camera.position.z = Math.floor(Math.sin( timer ) * 200 - 250);
     
-      if(camera.position.z > 0)
-        console.log(camera.position.z);
 //if the z value is positive will cause a big trouble. Not sure if this is an inherent webgl problem. looking from negative z value to positive z value actually results seeing a grey wall.  
         
       camera.lookAt( scene.position );
@@ -535,7 +526,7 @@ Cm	:	1.0	}
     function animate(t) {
       requestAnimationFrame(animate);
 
-      update(clock.getDelta());
+      update();
       render(clock.getDelta());
     }
 
