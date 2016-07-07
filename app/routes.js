@@ -19,11 +19,11 @@ var upload = multer({ storage: storage });
 module.exports = function(app, passport) {
 
 	app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
-		res.redirect('/profile.html');
+		res.redirect('/index.html');
 	});
 
 	app.post('/login', passport.authenticate('local-login'), function(req, res) {
-		res.redirect('/profile.html');
+		res.redirect('/index.html');
 	});
 
 	app.get('/profile', isLoggedIn, function(req, res) {
@@ -81,7 +81,35 @@ module.exports = function(app, passport) {
 			res.status(200).json({message: 'Data found!', data: filenames});
 		});
 			
-	});  
+	}); 
+	
+  app.post('/delfiles',isLoggedIn,function(req,res){
+		//delete required files
+	
+		var filePathVesta = 'frontend/public/vesta_files/' + req.body.filename + '.vesta';
+		var filePathXyz = 'frontend/public/vesta_files/' + req.body.filename + '.xyz';
+		
+		console.log(filePathVesta);
+		console.log(filePathXyz);
+		
+		fs.unlink(filePathVesta,function(err){
+			if(err){
+				res.status(500).json({message: 'Error happened!', data: err});
+			}
+			fs.unlink(filePathXyz,function(err){
+				if(err){
+					res.status(500).json({message: 'Error happened!', data: err});
+				}
+				res.status(200).json({message: 'files deleted!'});
+			});
+		});			
+
+	}); 	
+	
+
+	
+	
+	
     
 	app.post('/fs/upload',isLoggedIn,function (req, res) {
 
