@@ -93,6 +93,9 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 		}
 		
 		$scope.deleteFiles = function(filename){
+				var fileName = "#showDel_" +filename;
+				angular.element( document.querySelector(fileName) ).removeClass("confirm");
+			
         $http({
             method: 'POST',
             url: '/delfiles',
@@ -132,7 +135,15 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     }
     $scope.getCurUser();		
 		
-		
+		$scope.showYesNo = function(file){
+			var fileName = "#showDel_" +file;
+			angular.element( document.querySelector(fileName) ).addClass("confirm");
+		}
+		$scope.closeYesNo = function(file){
+			console.log("hey");
+			var fileName = "#showDel_" +file;
+			angular.element( document.querySelector(fileName) ).removeClass("delete");
+		}		
 		
     
 }]);
