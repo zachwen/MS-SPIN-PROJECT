@@ -34,7 +34,9 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             url: '/filesinfo',
         }).success(function (data, status, headers, config) {
             $scope.filesinfo = data.data;
-						console.log(data.data);
+						data.data.forEach(function(file){
+							$scope.showDel[file] = false;
+						});
          }).error(function (data, status, headers, config) {
             console.log("get filesinfo error")
             console.log("data: "+data);
@@ -59,13 +61,17 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 				$scope.rendering = true;	
 				if($scope.polyhedron[filename] === true){
 					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-					eval(data); 
 				}
 				else{
 					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
 					data = data.replace("createPolyhedron(max_dist,polyhedron,atom_a);",'');
-					eval(data);
 				}
+				
+				if($scope.spinning[filename] === true){
+					console.log("self spiinnnnnnn");
+					data = data.replace("setAutoControls();","setOrientationControl();");
+				}
+				eval(data); 
 				
 			}).error(function (data, status, headers, config) {
 				console.log("get filesinfo error")
@@ -87,6 +93,53 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 		$scope.reload = function(){
 			location.reload();
 		}
+		
+		$scope.deleteFiles = function(filename){
+				$scope.showDel[filename] = !$scope.showDel[filename];
+        $http({
+            method: 'POST',
+            url: '/delfiles',
+						data:{"filename":filename}
+        }).success(function (data, status, headers, config) {
+
+						location.reload();
+         }).error(function (data, status, headers, config) {
+            console.log("get filesinfo error")
+            console.log("data: "+data);
+            console.log("status: "+status);
+            console.log("headers: "+headers);
+         });    			
+			
+			
+		}
+		
+	  $scope.curUser = null;
+	  $scope.showLogout = function(){
+        return ($scope.curUser==null) ? false: true;
+    }
+    $scope.$watch('curUser', function(){
+        $scope.showLogout();
+    })
+    $scope.getCurUser = function(){
+        $http({
+            method: 'GET',
+            url: '/user',
+        }).success(function (data, status, headers, config) {
+            $scope.curUser=data.data;
+         }).error(function (data, status, headers, config) {
+            console.log("get user error")
+            console.log("data: "+data);
+            console.log("status: "+status);
+            console.log("headers: "+headers);
+         });           
+    }
+    $scope.getCurUser();		
+		
+		$scope.showDel = {};
+		$scope.revertDel = function(file){
+			$scope.showDel[file] = !$scope.showDel[file];
+		}
+		
     
 }]);
 
