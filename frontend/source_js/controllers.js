@@ -34,7 +34,9 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             url: '/filesinfo',
         }).success(function (data, status, headers, config) {
             $scope.filesinfo = data.data;
-						console.log(data.data);
+						data.data.forEach(function(file){
+							$scope.showDel[file] = false;
+						});
          }).error(function (data, status, headers, config) {
             console.log("get filesinfo error")
             console.log("data: "+data);
@@ -93,9 +95,7 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 		}
 		
 		$scope.deleteFiles = function(filename){
-				var fileName = "#showDel_" +filename;
-				angular.element( document.querySelector(fileName) ).removeClass("confirm");
-			
+				$scope.showDel[filename] = !$scope.showDel[filename];
         $http({
             method: 'POST',
             url: '/delfiles',
@@ -135,15 +135,10 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     }
     $scope.getCurUser();		
 		
-		$scope.showYesNo = function(file){
-			var fileName = "#showDel_" +file;
-			angular.element( document.querySelector(fileName) ).addClass("confirm");
+		$scope.showDel = {};
+		$scope.revertDel = function(file){
+			$scope.showDel[file] = !$scope.showDel[file];
 		}
-		$scope.closeYesNo = function(file){
-			console.log("hey");
-			var fileName = "#showDel_" +file;
-			angular.element( document.querySelector(fileName) ).removeClass("delete");
-		}		
 		
     
 }]);

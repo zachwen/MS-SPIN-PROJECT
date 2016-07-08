@@ -210,8 +210,8 @@
 			<div class="small-6 columns" ng-repeat="file in filesinfo" style="border-bottom-style:outset;">
 				<h2>{{file}}</h2>
 				<div class="row" ng-show="showLogout()">
-					<div class="delete-confirm" ng-click="showYesNo(file)">
-						<button class="delete" id="showDel_{{file}}">
+					<div class="delete-confirm">
+						<button ng-class="{delete: true,confirm:showDel[file]}" ng-click="revertDel(file)" >
 							<i class="fa fa-trash-o fa-lg"></i>
 							<span class="text">Delete</span>
 						</button>
@@ -219,7 +219,7 @@
 							<i class="fa fa-check"></i>
 							<span class="text">Yes</span>
 						</button>
-						<button class="no" ng-click="closeYesNo(file)">
+						<button class="no" ng-click="revertDel(file)">
 							<i class="fa fa-close"></i>
 							<span class="text">No</span>
 						</button>
