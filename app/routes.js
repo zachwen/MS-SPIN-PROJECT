@@ -2,19 +2,37 @@ var multer  = require('multer');
 var User = require('../app/models/user');
 var fs = require('fs');
 var path = require("path");
+var mime = require('mime');
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, 'frontend/public/vesta_files/');
+		var extension = file.originalname.split(/[. ]+/).pop();
+		var mimetype = mime.lookup(extension);
+		var prefix = mimetype.split('/')[0];
+		if(extension==='xyz' || extension === 'vesta'){
+			cb(null, 'frontend/public/vesta_files/');					
+		}else if( prefix ==='audio'){
+			cb(null, 'frontend/public/audios/');
+		}	
 	},
 	filename: function (req, file, cb) {
     //not necessary here, just in case files would be required to rename, this function would be useful then  
-		//var extension = file.originalname.split(/[. ]+/).pop();
 		cb(null, file.originalname);
 	}
 });
 
-var upload = multer({ storage: storage });
+var fileFilter = function(req,file,cb){
+		var extension = file.originalname.split(/[. ]+/).pop();
+		var mimetype = mime.lookup(extension);
+		var prefix = mimetype.split('/')[0];
+		if(extension==='xyz' || extension === 'vesta' ||  prefix ==='audio' ){
+			cb(null, true);					
+		}else{
+			cb(null,false);
+		}		
+}
+
+var upload = multer({ storage: storage, fileFilter:fileFilter});
 
 module.exports = function(app, passport) {
 
@@ -89,9 +107,6 @@ module.exports = function(app, passport) {
 		var filePathVesta = 'frontend/public/vesta_files/' + req.body.filename + '.vesta';
 		var filePathXyz = 'frontend/public/vesta_files/' + req.body.filename + '.xyz';
 		
-		console.log(filePathVesta);
-		console.log(filePathXyz);
-		
 		fs.unlink(filePathVesta,function(err){
 			if(err){
 				res.status(500).json({message: 'Error happened!', data: err});
@@ -113,15 +128,14 @@ module.exports = function(app, passport) {
     
 	app.post('/fs/upload',isLoggedIn,function (req, res) {
 
-		var file_receiver = upload.array('dataFiles', 2);
+		var file_receiver = upload.array('dataFiles', 5);
 		file_receiver(req, res, function (err) {
 			if (err) {
 				// An error occurred when uploading
-				console.log("error in /fs/upload : " + err );
-				return;
+				res.status(500).json({message:"Internal Error, failed to upload files"});
 			}
 			// Everything went fine
-			res.status(200).json({message:"Image uploaded successfully"});
+			res.status(200).json({message:"files uploaded successfully"});
       res.redirect('/Project.html');  
 		})
 	});  

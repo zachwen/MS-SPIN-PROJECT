@@ -168,24 +168,19 @@ input {
     
     <div class="row">
         <div class="columns small-offset-3 small-6" >
-            Upload the associated vesta and xyz files of the molecules you would like to render here. Please make sure the filename are only consist of letters and numbers(e.g.,CH3NH3PbI3.vesta) .
+            Upload the associated vesta, xyz and audio files of the molecules you would like to render here. Please make sure the filename are only consist of letters and numbers(e.g.,CH3NH3PbI3.vesta). Files other than xyz , vesta and audios will be ignored.
                 
         </div>
     </div>
 <div>
-      <form id="newService" class="small-offset-3 small-6 columns" action="/fs/upload" method="post" enctype="multipart/form-data">
+      <form id="newService" class="small-offset-3 small-6 columns" action="/fs/upload" method="post" enctype="multipart/form-data">          
 <!--
-          <div class="">
-           <br>
-            <input type="file" name="dataFiles"><br>
-          </div>
--->
-          
             <div class="btn download">
               <div class="cloud">
                 <div class="arrow"></div>
               </div>
             </div>
+-->
           
             <div class="btn upload">
               <div class="cloud">
@@ -193,8 +188,8 @@ input {
               </div>
             </div>
           <div class="row">
-              <div class="small-6 columns"><input type="file" name="dataFiles"></div>
-              <div class="small-6 columns"><input type="file" name="dataFiles"> </div>
+              <div class="small-offset-3 small-6 columns"><input type="file" name="dataFiles" multiple></div>
+<!--              <div class="small-6 columns"><input type="file" name="dataFiles"> </div>-->
           </div>
 
           <div class="row" style="text-align:center"><button class="expanded button" type="submit">Submit</button></div>
@@ -202,28 +197,6 @@ input {
 </div>    
 
 </div>    
-    
-<!--
-    <div class="row">
-        <div class="columns small-offset-3 small-6" >
-            Upload the associated vesta and xyz files of the molecules you would like to render here. Please make sure the filename are only consist of letters and numbers(e.g.,CH3NH3PbI3.vesta) .
-                
-        </div>
-    </div>
-    
-    
-    <div class="row">
-      <form id="newService" class="small-offset-4 small-4 columns" action="/fs/upload" method="post" enctype="multipart/form-data">
-          <div class="">
-            <input type="file" name="dataFiles"><br>
-            <input type="file" name="dataFiles"><br>
-          </div>
-
-          <div class="row" style="text-align:center"><button class="expanded button" type="submit">Submit</button></div>
-      </form>
-    </div> 
--->
-    
     
     <script src="./lib/jquery-2.1.3.min/index.js"></script>
     <script src="./foundation6_lib/js/foundation.min.js"></script>
