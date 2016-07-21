@@ -71,6 +71,11 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 					console.log("self spiinnnnnnn");
 					data = data.replace("setAutoControls();","setOrientationControl();");
 				}
+				if($scope.audio[filename] === true){
+					var audiotag = angular.element(document.querySelector('#molecule_audio'));
+					audiotag.attr('src','./audios/' + filename + '.mp3');
+				}
+				
 				eval(data); 
 				
 			}).error(function (data, status, headers, config) {
@@ -109,8 +114,6 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             console.log("status: "+status);
             console.log("headers: "+headers);
          });    			
-			
-			
 		}
 		
 	  $scope.curUser = null;
