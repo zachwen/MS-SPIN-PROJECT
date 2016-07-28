@@ -41,3 +41,7 @@ Rendering option for a single molecules now include 1. auto-spinning or head-tra
 --------------------------------------Updated in July 05------------------------------------------------------------
 Device orientation control is considered deprecated on insecure origins....probably need to switch this web app to https protocol. 
 https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins
+
+--------------------------------------Updated in July 17------------------------------------------------------------
+Added routes.js and controllers.js to enable audio playing when rendering molecules
+Support audio upload now, should be able to filter uploaded files according to files uploaded.
