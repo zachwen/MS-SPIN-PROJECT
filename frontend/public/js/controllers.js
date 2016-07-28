@@ -80,6 +80,10 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 				if($scope.audio[filename] === true){
 					var audiotag = angular.element(document.querySelector('#molecule_audio'));
 					audiotag.attr('src','./audios/' + filename+ '.mp3');
+					audiotag.load()
+					audiotag.addEventListener("load", function() { 
+						audiotag.play(); 
+					}, true);
 				}
 				
 				eval(data); 
