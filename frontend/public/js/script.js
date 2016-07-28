@@ -411,10 +411,6 @@ Cm	:	1.0	}
     
     function bond_helper(atom_a,atom_b, max){
         //create bonds from atom_a to atom_b
-        
-        console.log(atom_array);
-        console.log(atom_a);
-        console.log(atom_b);
         var max_dist = (10*max)*(10*max);
         for(var i = 0; i < atom_array[atom_a].length; i= i+3){
             var x1 = atom_array[atom_a][i];
