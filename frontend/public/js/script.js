@@ -372,7 +372,7 @@ Cm	:	1.0	}
             chunks = res[i].split(" ");
             var count = 0;
             for(var k = 0; k < chunks.length; k++){
-                if(chunks[k] == "SBOND")
+                if(chunks[k].indexOf("SBOND") >= 0)
                 {
                     reached = true;
                     break;// go to the next line
