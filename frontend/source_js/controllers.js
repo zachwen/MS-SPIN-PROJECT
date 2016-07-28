@@ -68,8 +68,9 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 				}
 				
 				if($scope.spinning[filename] === true){
-					console.log("self spiinnnnnnn");
 					data = data.replace("setAutoControls();","setOrientationControl();");
+					data = data.replace('camera.lookAt( scene.position );','');
+					data = data.replace('camera.lookAt( scene.position );','');
 				}
 				if($scope.audio[filename] === true){
 					var audiotag = angular.element(document.querySelector('#molecule_audio'));

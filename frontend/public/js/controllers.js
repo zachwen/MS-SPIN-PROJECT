@@ -68,12 +68,13 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 				}
 				
 				if($scope.spinning[filename] === true){
-					console.log("self spiinnnnnnn");
 					data = data.replace("setAutoControls();","setOrientationControl();");
+					data = data.replace('camera.lookAt( scene.position );','');
+					data = data.replace('camera.lookAt( scene.position );','');
 				}
 				if($scope.audio[filename] === true){
 					var audiotag = angular.element(document.querySelector('#molecule_audio'));
-					audiotag.attr('src','./audios/' + filename + '.mp3');
+					audiotag.attr('src','./audios/Radiohead - Creep.mp3');
 				}
 				
 				eval(data); 
@@ -114,6 +115,8 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             console.log("status: "+status);
             console.log("headers: "+headers);
          });    			
+			
+			
 		}
 		
 	  $scope.curUser = null;
