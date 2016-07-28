@@ -70,7 +70,12 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 				if($scope.spinning[filename] === true){
 					data = data.replace("setAutoControls();","setOrientationControl();");
 					data = data.replace('camera.lookAt( scene.position );','');
-					data = data.replace('camera.lookAt( scene.position );','');
+					data = data.replace('camera.lookAt( scene.position );','replaced1');
+					
+					data = data.replace('camera.position.x = Math.floor(Math.cos( timer ) * 200 - 250);','');
+					data = data.replace('camera.position.y = Math.floor(Math.cos( timer ) * 200 - 250);','');
+					data = data.replace('camera.position.z = Math.floor(Math.sin( timer ) * 200 - 250);','console.log("replaced2")');
+
 				}
 				if($scope.audio[filename] === true){
 					var audiotag = angular.element(document.querySelector('#molecule_audio'));
