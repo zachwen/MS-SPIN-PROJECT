@@ -4,7 +4,6 @@
     var camera, scene, renderer;
     var effect, controls;
     var element, container;
-    var as_mesh = [];
     var mesh;
 
     var clock = new THREE.Clock();
@@ -14,11 +13,17 @@
     //the following vars are used to dynamically render atoms in xyz file
     var num_atoms = 0;
     var atom_array = {};
-	
+		
+		//control flags
 		var dataFile = '';
 		var autoCameraFlag = true;
 		var audioFlag = false;
 		var polyhedronFlag = false;
+		//used for circulating among files
+		var dataFileArray = [];
+		var curFileIndex = -1;
+		var nextMolecule = false;
+		var onInitialState = true;
 		//CPK CHEMESTRY COLORING STARTS HERE download from http://jmol.sourceforge.net/jscolors/
     var atom_colors = {
 			H	:	0xFFFFFF	,
@@ -236,16 +241,24 @@
 		var MRender = {init : init};
 		window.MRender = MRender;
 	
-    function init(filename,autoFlag, polyFlag) {
+    function init(filename,autoFlag, polyFlag, fileArray) {
 			//control flags
 			dataFile = filename;
 			autoCameraFlag = autoFlag;
 			polyhedronFlag = polyFlag;
+			//used for circulating
+			dataFileArray = fileArray;
+			curFileIndex = dataFileArray.indexOf(dataFile);
+			atom_array = {};
+			nextMolecule = false;
 			
       renderer = new THREE.WebGLRenderer();
       element = renderer.domElement;
       container = document.getElementById('example');
-      container.appendChild(element);
+			if(onInitialState){
+				container.appendChild(element);	
+			}
+      
 
       effect = new THREE.StereoEffect(renderer);
 
@@ -253,8 +266,9 @@
 
       camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 1000 );
       camera.position.set(50, 300, 50);
-			if(autoCameraFlag)
-      	camera.lookAt(scene.position);
+			if(autoCameraFlag){
+				camera.lookAt(scene.position);	
+			}
       scene.add(camera);
 
 			if(autoCameraFlag){
@@ -274,14 +288,13 @@
           parseXYZ,
          function(xhr) { console.error(xhr); }
         );  
-			$('#example').append('<p style ="color:red;top:50px;right:10px;position:absolute;font-size:60px" id="alphavalue">300</p>');
+			$('#example').append('<p style ="color:red;top:50px;right:10px;position:absolute;font-size:18px" id="alphavalue">300</p>');
         
     }
 		function setOrientationControl(){
 			  controls = new THREE.DeviceOrientationControls(camera, true);
         controls.connect();
         controls.update();
-				console.log('device reached');
 		}
 		
     function setAutoControls(){
@@ -431,10 +444,6 @@
     
     function bond_helper(atom_a,atom_b, max){
         //create bonds from atom_a to atom_b
-        
-        console.log(atom_array);
-        console.log(atom_a);
-        console.log(atom_b);
         var max_dist = (10*max)*(10*max);
         for(var i = 0; i < atom_array[atom_a].length; i= i+3){
             var x1 = atom_array[atom_a][i];
@@ -544,10 +553,19 @@
     }
 
     function animate(t) {
-      requestAnimationFrame(animate);
+
 			update();
       render(clock.getDelta());
 			window.addEventListener('deviceorientation', setOrientationControls, true);
+			
+			if(nextMolecule){
+				curFileIndex++;
+				curFileIndex = curFileIndex >= dataFileArray.length ? 0 : curFileIndex;
+				init(curFileIndex,autoCameraFlag, polyhedronFlag, dataFileArray);
+			}else{
+      	requestAnimationFrame(animate);				
+			}
+
 		}
 
 	
@@ -556,8 +574,10 @@
 				return;
 			}
 			$('#alphavalue').text(e.alpha);
-			if(e.alpha == 90)
-				alert("Event triggered");
+			if(e.alpha >= 80 && e.alpha <= 100){
+				nextMolecule = true;
+			}
+				
 				
       window.removeEventListener('deviceorientation', setOrientationControls);
     }

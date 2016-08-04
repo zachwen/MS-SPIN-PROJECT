@@ -57,8 +57,8 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 			$scope.rendering = true;
 			polyFlag = $scope.polyhedron[filename] ? true : false ;
 			autoFlag = $scope.spinning[filename] ? true : false;
-			console.log(autoFlag);
-			MRender.init(filename,autoFlag,polyFlag);
+			MRender.init(filename,autoFlag,polyFlag,$scope.filesinfo);
+			
 			//							if($scope.audio[filename] === true){
 			//								var audiotag = angular.element(document.querySelector('#molecule_audio'));
 			//								audiotag.attr('src','./audios/' + filename+ '.mp3');
