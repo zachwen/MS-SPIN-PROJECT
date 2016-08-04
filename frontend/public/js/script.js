@@ -257,7 +257,7 @@
       	camera.lookAt(scene.position);
       scene.add(camera);
 
-			if(!autoCameraFlag){
+			if(autoCameraFlag){
 				setAutoControls();
 			}else{
 				setOrientationControl();
@@ -280,6 +280,7 @@
 			  controls = new THREE.DeviceOrientationControls(camera, true);
         controls.connect();
         controls.update();
+				console.log('device reached');
 		}
 		
     function setAutoControls(){
