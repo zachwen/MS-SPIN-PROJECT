@@ -14,221 +14,234 @@
     //the following vars are used to dynamically render atoms in xyz file
     var num_atoms = 0;
     var atom_array = {};
-//////////////////////////CPK CHEMESTRY COLORING STARTS HERE download from http://jmol.sourceforge.net/jscolors/
+	
+		var dataFile = '';
+		var autoCameraFlag = true;
+		var audioFlag = false;
+		var polyhedronFlag = false;
+		//CPK CHEMESTRY COLORING STARTS HERE download from http://jmol.sourceforge.net/jscolors/
     var atom_colors = {
-H	:	0xFFFFFF	,
-He	:	0xD9FFFF	,
-Li	:	0xCC80FF	,
-Be	:	0xC2FF00	,
-B	:	0xFFB5B5	,
-C	:	0x909090	,
-N	:	0x3050F8	,
-O	:	0xFF0D0D	,
-F	:	0x90E050	,
-Ne	:	0xB3E3F5	,
-Na	:	0xAB5CF2	,
-Mg	:	0x8AFF00	,
-Al	:	0xBFA6A6	,
-Si	:	0xF0C8A0	,
-P	:	0xFF8000	,
-S	:	0xFFFF30	,
-Cl	:	0x1FF01F	,
-Ar	:	0x80D1E3	,
-K	:	0x8F40D4	,
-Ca	:	0x3DFF00	,
-Sc	:	0xE6E6E6	,
-Ti	:	0xBFC2C7	,
-V	:	0xA6A6AB	,
-Cr	:	0x8A99C7	,
-Mn	:	0x9C7AC7	,
-Fe	:	0xE06633	,
-Co	:	0xF090A0	,
-Ni	:	0x50D050	,
-Cu	:	0xC88033	,
-Zn	:	0x7D80B0	,
-Ga	:	0xC28F8F	,
-Ge	:	0x668F8F	,
-As	:	0xBD80E3	,
-Se	:	0xFFA100	,
-Br	:	0xA62929	,
-Kr	:	0x5CB8D1	,
-Rb	:	0x702EB0	,
-Sr	:	0x00FF00	,
-Y	:	0x94FFFF	,
-Zr	:	0x94E0E0	,
-Nb	:	0x73C2C9	,
-Mo	:	0x54B5B5	,
-Tc	:	0x3B9E9E	,
-Ru	:	0x248F8F	,
-Rh	:	0x0A7D8C	,
-Pd	:	0x006985	,
-Ag	:	0xC0C0C0	,
-Cd	:	0xFFD98F	,
-In	:	0xA67573	,
-Sn	:	0x668080	,
-Sb	:	0x9E63B5	,
-Te	:	0xD47A00	,
-I	:	0x940094	,
-Xe	:	0x429EB0	,
-Cs	:	0x57178F	,
-Ba	:	0x00C900	,
-La	:	0x70D4FF	,
-Ce	:	0xFFFFC7	,
-Pr	:	0xD9FFC7	,
-Nd	:	0xC7FFC7	,
-Pm	:	0xA3FFC7	,
-Sm	:	0x8FFFC7	,
-Eu	:	0x61FFC7	,
-Gd	:	0x45FFC7	,
-Tb	:	0x30FFC7	,
-Dy	:	0x1FFFC7	,
-Ho	:	0x00FF9C	,
-Er	:	0x00E675	,
-Tm	:	0x00D452	,
-Yb	:	0x00BF38	,
-Lu	:	0x00AB24	,
-Hf	:	0x4DC2FF	,
-Ta	:	0x4DA6FF	,
-W	:	0x2194D6	,
-Re	:	0x267DAB	,
-Os	:	0x266696	,
-Ir	:	0x175487	,
-Pt	:	0xD0D0E0	,
-Au	:	0xFFD123	,
-Hg	:	0xB8B8D0	,
-Tl	:	0xA6544D	,
-Pb	:	0x575961	,
-Bi	:	0x9E4FB5	,
-Po	:	0xAB5C00	,
-At	:	0x754F45	,
-Rn	:	0x428296	,
-Fr	:	0x420066	,
-Ra	:	0x007D00	,
-Ac	:	0x70ABFA	,
-Th	:	0x00BAFF	,
-Pa	:	0x00A1FF	,
-U	:	0x008FFF	,
-Np	:	0x0080FF	,
-Pu	:	0x006BFF	,
-Am	:	0x545CF2	,
-Cm	:	0x785CE3	,
-Bk	:	0x8A4FE3	,
-Cf	:	0xA136D4	,
-Es	:	0xB31FD4	,
-Fm	:	0xB31FBA	,
-Md	:	0xB30DA6	,
-No	:	0xBD0D87	,
-Lr	:	0xC70066	,
-Rf	:	0xCC0059	,
-Db	:	0xD1004F	,
-Sg	:	0xD90045	,
-Bh	:	0xE00038	,
-Hs	:	0xE6002E	,
-Mt	:	0xEB0026	}
-/////////////////COVALENT RADIUS BEGIN    
+			H	:	0xFFFFFF	,
+			He	:	0xD9FFFF	,
+			Li	:	0xCC80FF	,
+			Be	:	0xC2FF00	,
+			B	:	0xFFB5B5	,
+			C	:	0x909090	,
+			N	:	0x3050F8	,
+			O	:	0xFF0D0D	,
+			F	:	0x90E050	,
+			Ne	:	0xB3E3F5	,
+			Na	:	0xAB5CF2	,
+			Mg	:	0x8AFF00	,
+			Al	:	0xBFA6A6	,
+			Si	:	0xF0C8A0	,
+			P	:	0xFF8000	,
+			S	:	0xFFFF30	,
+			Cl	:	0x1FF01F	,
+			Ar	:	0x80D1E3	,
+			K	:	0x8F40D4	,
+			Ca	:	0x3DFF00	,
+			Sc	:	0xE6E6E6	,
+			Ti	:	0xBFC2C7	,
+			V	:	0xA6A6AB	,
+			Cr	:	0x8A99C7	,
+			Mn	:	0x9C7AC7	,
+			Fe	:	0xE06633	,
+			Co	:	0xF090A0	,
+			Ni	:	0x50D050	,
+			Cu	:	0xC88033	,
+			Zn	:	0x7D80B0	,
+			Ga	:	0xC28F8F	,
+			Ge	:	0x668F8F	,
+			As	:	0xBD80E3	,
+			Se	:	0xFFA100	,
+			Br	:	0xA62929	,
+			Kr	:	0x5CB8D1	,
+			Rb	:	0x702EB0	,
+			Sr	:	0x00FF00	,
+			Y	:	0x94FFFF	,
+			Zr	:	0x94E0E0	,
+			Nb	:	0x73C2C9	,
+			Mo	:	0x54B5B5	,
+			Tc	:	0x3B9E9E	,
+			Ru	:	0x248F8F	,
+			Rh	:	0x0A7D8C	,
+			Pd	:	0x006985	,
+			Ag	:	0xC0C0C0	,
+			Cd	:	0xFFD98F	,
+			In	:	0xA67573	,
+			Sn	:	0x668080	,
+			Sb	:	0x9E63B5	,
+			Te	:	0xD47A00	,
+			I	:	0x940094	,
+			Xe	:	0x429EB0	,
+			Cs	:	0x57178F	,
+			Ba	:	0x00C900	,
+			La	:	0x70D4FF	,
+			Ce	:	0xFFFFC7	,
+			Pr	:	0xD9FFC7	,
+			Nd	:	0xC7FFC7	,
+			Pm	:	0xA3FFC7	,
+			Sm	:	0x8FFFC7	,
+			Eu	:	0x61FFC7	,
+			Gd	:	0x45FFC7	,
+			Tb	:	0x30FFC7	,
+			Dy	:	0x1FFFC7	,
+			Ho	:	0x00FF9C	,
+			Er	:	0x00E675	,
+			Tm	:	0x00D452	,
+			Yb	:	0x00BF38	,
+			Lu	:	0x00AB24	,
+			Hf	:	0x4DC2FF	,
+			Ta	:	0x4DA6FF	,
+			W	:	0x2194D6	,
+			Re	:	0x267DAB	,
+			Os	:	0x266696	,
+			Ir	:	0x175487	,
+			Pt	:	0xD0D0E0	,
+			Au	:	0xFFD123	,
+			Hg	:	0xB8B8D0	,
+			Tl	:	0xA6544D	,
+			Pb	:	0x575961	,
+			Bi	:	0x9E4FB5	,
+			Po	:	0xAB5C00	,
+			At	:	0x754F45	,
+			Rn	:	0x428296	,
+			Fr	:	0x420066	,
+			Ra	:	0x007D00	,
+			Ac	:	0x70ABFA	,
+			Th	:	0x00BAFF	,
+			Pa	:	0x00A1FF	,
+			U	:	0x008FFF	,
+			Np	:	0x0080FF	,
+			Pu	:	0x006BFF	,
+			Am	:	0x545CF2	,
+			Cm	:	0x785CE3	,
+			Bk	:	0x8A4FE3	,
+			Cf	:	0xA136D4	,
+			Es	:	0xB31FD4	,
+			Fm	:	0xB31FBA	,
+			Md	:	0xB30DA6	,
+			No	:	0xBD0D87	,
+			Lr	:	0xC70066	,
+			Rf	:	0xCC0059	,
+			Db	:	0xD1004F	,
+			Sg	:	0xD90045	,
+			Bh	:	0xE00038	,
+			Hs	:	0xE6002E	,
+			Mt	:	0xEB0026	}
 
-//downloaded from http://crystalmaker.com/support/tutorials/crystalmaker/atomic-radii/index.html
-var covalent_radius = {
-H	:	0.37	,
-He	:	0.32	,
-Li	:	1.34	,
-Be	:	0.90	,
-B	:	0.82	,
-C	:	0.77	,
-N	:	0.75	,
-O	:	0.73	,
-F	:	0.71	,
-Ne	:	0.69	,
-Na	:	1.54	,
-Mg	:	1.30	,
-Al	:	1.18	,
-Si	:	1.11	,
-P	:	1.06	,
-S	:	1.02	,
-Cl	:	0.99	,
-Ar	:	0.97	,
-K	:	1.96	,
-Ca	:	1.74	,
-Sc	:	1.44	,
-Ti	:	1.36	,
-V	:	1.25	,
-Cr	:	1.27	,
-Mn	:	1.39	,
-Fe	:	1.25	,
-Co	:	1.26	,
-Ni	:	1.21	,
-Cu	:	1.38	,
-Zn	:	1.31	,
-Ga	:	1.26	,
-Ge	:	1.22	,
-As	:	1.19	,
-Se	:	1.16	,
-Br	:	1.14	,
-Kr	:	1.10	,
-Rb	:	2.11	,
-Sr	:	1.92	,
-Y	:	1.62	,
-Zr	:	1.48	,
-Nb	:	1.37	,
-Mo	:	1.45	,
-Tc	:	1.56	,
-Ru	:	1.26	,
-Rh	:	1.35	,
-Pd	:	1.31	,
-Ag	:	1.53	,
-Cd	:	1.48	,
-In	:	1.44	,
-Sn	:	1.41	,
-Sb	:	1.38	,
-Te	:	1.35	,
-I	:	1.33	,
-Xe	:	1.30	,
-Cs	:	2.25	,
-Ba	:	1.98	,
-La	:	1.69	,
-Ce	:	1.0	,
-Pr	:	1.0	,
-Nd	:	1.0	,
-Pm	:	1.0	,
-Sm	:	1.0	,
-Eu	:	1.0	,
-Gd	:	1.0	,
-Tb	:	1.0	,
-Dy	:	1.0	,
-Ho	:	1.0	,
-Er	:	1.0	,
-Tm	:	1.0	,
-Yb	:	1.0	,
-Lu	:	1.60	,
-Hf	:	1.50	,
-Ta	:	1.38	,
-W	:	1.46	,
-Re	:	1.59	,
-Os	:	1.28	,
-Ir	:	1.37	,
-Pt	:	1.28	,
-Au	:	1.44	,
-Hg	:	1.49	,
-Tl	:	1.48	,
-Pb	:	1.47	,
-Bi	:	1.46,
-Po	:	1.0	,
-At	:	1.0	,
-Rn	:	1.45,
-Fr	:	1.0	,
-Ra	:	1.0	,
-Ac	:	1.0	,
-Th	:	1.0	,
-Pa	:	1.0	,
-U	:	1.0	,
-Np	:	1.0	,
-Pu	:	1.0	,
-Am	:	1.0	,
-Cm	:	1.0	}    
-/////////////////COVALENT RADIUS END    
-    init();
-
-    function init() {
+		//COVALENT RADIUS BEGIN    
+		//downloaded from http://crystalmaker.com/support/tutorials/crystalmaker/atomic-radii/index.html
+		var covalent_radius = {
+			H	:	0.37	,
+			He	:	0.32	,
+			Li	:	1.34	,
+			Be	:	0.90	,
+			B	:	0.82	,
+			C	:	0.77	,
+			N	:	0.75	,
+			O	:	0.73	,
+			F	:	0.71	,
+			Ne	:	0.69	,
+			Na	:	1.54	,
+			Mg	:	1.30	,
+			Al	:	1.18	,
+			Si	:	1.11	,
+			P	:	1.06	,
+			S	:	1.02	,
+			Cl	:	0.99	,
+			Ar	:	0.97	,
+			K	:	1.96	,
+			Ca	:	1.74	,
+			Sc	:	1.44	,
+			Ti	:	1.36	,
+			V	:	1.25	,
+			Cr	:	1.27	,
+			Mn	:	1.39	,
+			Fe	:	1.25	,
+			Co	:	1.26	,
+			Ni	:	1.21	,
+			Cu	:	1.38	,
+			Zn	:	1.31	,
+			Ga	:	1.26	,
+			Ge	:	1.22	,
+			As	:	1.19	,
+			Se	:	1.16	,
+			Br	:	1.14	,
+			Kr	:	1.10	,
+			Rb	:	2.11	,
+			Sr	:	1.92	,
+			Y	:	1.62	,
+			Zr	:	1.48	,
+			Nb	:	1.37	,
+			Mo	:	1.45	,
+			Tc	:	1.56	,
+			Ru	:	1.26	,
+			Rh	:	1.35	,
+			Pd	:	1.31	,
+			Ag	:	1.53	,
+			Cd	:	1.48	,
+			In	:	1.44	,
+			Sn	:	1.41	,
+			Sb	:	1.38	,
+			Te	:	1.35	,
+			I	:	1.33	,
+			Xe	:	1.30	,
+			Cs	:	2.25	,
+			Ba	:	1.98	,
+			La	:	1.69	,
+			Ce	:	1.0	,
+			Pr	:	1.0	,
+			Nd	:	1.0	,
+			Pm	:	1.0	,
+			Sm	:	1.0	,
+			Eu	:	1.0	,
+			Gd	:	1.0	,
+			Tb	:	1.0	,
+			Dy	:	1.0	,
+			Ho	:	1.0	,
+			Er	:	1.0	,
+			Tm	:	1.0	,
+			Yb	:	1.0	,
+			Lu	:	1.60	,
+			Hf	:	1.50	,
+			Ta	:	1.38	,
+			W	:	1.46	,
+			Re	:	1.59	,
+			Os	:	1.28	,
+			Ir	:	1.37	,
+			Pt	:	1.28	,
+			Au	:	1.44	,
+			Hg	:	1.49	,
+			Tl	:	1.48	,
+			Pb	:	1.47	,
+			Bi	:	1.46,
+			Po	:	1.0	,
+			At	:	1.0	,
+			Rn	:	1.45,
+			Fr	:	1.0	,
+			Ra	:	1.0	,
+			Ac	:	1.0	,
+			Th	:	1.0	,
+			Pa	:	1.0	,
+			U	:	1.0	,
+			Np	:	1.0	,
+			Pu	:	1.0	,
+			Am	:	1.0	,
+			Cm	:	1.0	}    
+		//COVALENT RADIUS END    
+	
+		//register this to the window object and therefore can be accessed in the angular controller
+		var MRender = {init : init};
+		window.MRender = MRender;
+	
+    function init(filename,autoFlag, polyFlag) {
+			//control flags
+			dataFile = filename;
+			autoCameraFlag = autoFlag;
+			polyhedronFlag = polyFlag;
+			
       renderer = new THREE.WebGLRenderer();
       element = renderer.domElement;
       container = document.getElementById('example');
@@ -240,19 +253,24 @@ Cm	:	1.0	}
 
       camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 1000 );
       camera.position.set(50, 300, 50);
-      camera.lookAt( scene.position );
+			if(autoCameraFlag)
+      	camera.lookAt(scene.position);
       scene.add(camera);
 
-			setAutoControls();
-
+			if(!autoCameraFlag){
+				setAutoControls();
+			}else{
+				setOrientationControl();
+			}
+				
       var light = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6);
       scene.add(light);
         
       window.addEventListener('resize', resize, false);
-      setTimeout(resize, 1);
-///////////////////////////////////////////////////////////////////////////////////////    
-    //dynamically handle every input file and also treat the .xyz file as json here.
-      loadfile('../vesta_files/CuZnSnS.xyz',
+      setTimeout(resize, 1);    
+    	
+			//dynamically handle every input file and also treat the .xyz file as json here.
+      loadfile('../vesta_files/'+ dataFile + '.xyz',
           parseXYZ,
          function(xhr) { console.error(xhr); }
         );  
@@ -299,7 +317,7 @@ Cm	:	1.0	}
     }
     
     //parse the xyz file and load them into an array to be used later
-      function parseXYZ(data) { 
+    function parseXYZ(data) { 
             var res = data.split("\n");
             var chunks;//used to hold the split chunk of a line
             var coords = [0.0,0.0,0.0];
@@ -351,7 +369,7 @@ Cm	:	1.0	}
                     atom_array[atom].push(coords[2]);   
                 }
             }
-        loadfile('../vesta_files/CuZnSnS.vesta',
+        loadfile('../vesta_files/'+dataFile+'.vesta',
           create_bonds,
          function(xhr) { console.error(xhr); }
         );  
@@ -372,7 +390,7 @@ Cm	:	1.0	}
             chunks = res[i].split(" ");
             var count = 0;
             for(var k = 0; k < chunks.length; k++){
-                if(chunks[k].indexOf("SBOND") >= 0)
+                if(chunks[k].indexOf("SBOND")>=0)
                 {
                     reached = true;
                     break;// go to the next line
@@ -411,6 +429,10 @@ Cm	:	1.0	}
     
     function bond_helper(atom_a,atom_b, max){
         //create bonds from atom_a to atom_b
+        
+        console.log(atom_array);
+        console.log(atom_a);
+        console.log(atom_b);
         var max_dist = (10*max)*(10*max);
         for(var i = 0; i < atom_array[atom_a].length; i= i+3){
             var x1 = atom_array[atom_a][i];
@@ -444,7 +466,7 @@ Cm	:	1.0	}
                     scene.add( mesh );
                 }
             }
-            if(polyhedron.length != 0 ){
+            if(polyhedron.length != 0 && polyhedronFlag){
                 createPolyhedron(max_dist,polyhedron,atom_a);
             }
                 
@@ -484,8 +506,6 @@ Cm	:	1.0	}
         
     }
     
-    
-///////////////////////////////////////////////////////////////////////////////////////    
     function resize() {
       var width = container.offsetWidth;
       var height = container.offsetHeight;
@@ -509,13 +529,15 @@ Cm	:	1.0	}
       var time = Date.now();
       var timer = new Date().getTime() * 0.0005;
  
-      camera.position.x = Math.floor(Math.cos( timer ) * 200 - 250);
-      camera.position.y = Math.floor(Math.cos( timer ) * 200 - 250);
-      camera.position.z = Math.floor(Math.sin( timer ) * 200 - 250);
-    
-//if the z value is positive will cause a big trouble. Not sure if this is an inherent webgl problem. looking from negative z value to positive z value actually results seeing a grey wall.  
-        
-      camera.lookAt( scene.position );
+			    
+			//if the z value is positive will cause a big trouble. Not sure if this is an inherent webgl problem. looking from negative z value to positive z value actually results seeing a grey wall.  
+			if(autoCameraFlag){
+				camera.position.x = Math.floor(Math.cos( timer ) * 200 - 250);
+				camera.position.y = Math.floor(Math.cos( timer ) * 200 - 250);
+				camera.position.z = Math.floor(Math.sin( timer ) * 200 - 250);
+				camera.lookAt( scene.position );				
+			}
+
       effect.render( scene, camera);
     }
 

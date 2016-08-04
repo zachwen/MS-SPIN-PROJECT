@@ -54,46 +54,19 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
 	
 		//render
 		$scope.render = function(filename){
-			$http({
-				method: 'GET',
-				url: '../js/script.js',
-			}).success(function (data, status, headers, config) {
-				$scope.rendering = true;	
-				if($scope.polyhedron[filename] === true){
-					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-				}
-				else{
-					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-					data = data.replace("createPolyhedron(max_dist,polyhedron,atom_a);",'');
-				}
-				
-				if($scope.spinning[filename] === true){
-					data = data.replace("setAutoControls();","setOrientationControl();");
-					data = data.replace('camera.lookAt( scene.position );','');
-					data = data.replace('camera.lookAt( scene.position );','');
-					
-					data = data.replace('camera.position.x = Math.floor(Math.cos( timer ) * 200 - 250);','');
-					data = data.replace('camera.position.y = Math.floor(Math.cos( timer ) * 200 - 250);','');
-					data = data.replace('camera.position.z = Math.floor(Math.sin( timer ) * 200 - 250);','');
-
-				}
-				if($scope.audio[filename] === true){
-					var audiotag = angular.element(document.querySelector('#molecule_audio'));
-					audiotag.attr('src','./audios/' + filename+ '.mp3');
-					audiotag.load()
-					audiotag.addEventListener("load", function() { 
-						audiotag.play(); 
-					}, true);
-				}
-				
-				eval(data); 
-				
-			}).error(function (data, status, headers, config) {
-				console.log("get filesinfo error")
-				console.log("data: "+data);
-				console.log("status: "+status);
-				console.log("headers: "+headers);
-			});
+			$scope.rendering = true;
+			polyFlag = $scope.polyhedron[filename] ? true : false ;
+			autoFlag = $scope.spinning[filename] ? true : false;
+			console.log(autoFlag);
+			MRender.init(filename,autoFlag,polyFlag);
+			//							if($scope.audio[filename] === true){
+			//								var audiotag = angular.element(document.querySelector('#molecule_audio'));
+			//								audiotag.attr('src','./audios/' + filename+ '.mp3');
+			//								audiotag.load();
+			//								audiotag.addEventListener("load", function() { 
+			//									audiotag.play(); 
+			//								}, true);
+			//							}
 		};
 	
 		//when render, get rid of grid	  
