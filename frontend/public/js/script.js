@@ -544,11 +544,22 @@
 
     function animate(t) {
       requestAnimationFrame(animate);
-
-      update();
+			update();
       render(clock.getDelta());
-    }
+			window.addEventListener('deviceorientation', setOrientationControls, true);
+		}
 
+	
+	  function setOrientationControls(e) {
+			if (!e.alpha) {
+				return;
+			}
+			if(e.alpha == 90)
+				alert("Event triggered");
+				
+      window.removeEventListener('deviceorientation', setOrientationControls);
+    }
+	
     function fullscreen() {
       if (container.requestFullscreen) {
         container.requestFullscreen();
