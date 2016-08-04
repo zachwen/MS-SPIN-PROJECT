@@ -274,6 +274,7 @@
           parseXYZ,
          function(xhr) { console.error(xhr); }
         );  
+			$('#example').append('<button style ="color:red;top:50px;right:10px;position:absolute;font-size:60px" id="alphavalue">100</button>');
         
     }
 		function setOrientationControl(){
@@ -554,6 +555,7 @@
 			if (!e.alpha) {
 				return;
 			}
+			$('alphavalue').text(e.alpha);
 			if(e.alpha == 90)
 				alert("Event triggered");
 				
