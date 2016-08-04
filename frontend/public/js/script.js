@@ -254,11 +254,9 @@
 			
       renderer = new THREE.WebGLRenderer();
       element = renderer.domElement;
+			$('#example').empty();
+			$('#example').append(element);
       container = document.getElementById('example');
-			if(onInitialState){
-				container.appendChild(element);	
-			}
-      
 
       effect = new THREE.StereoEffect(renderer);
 
@@ -561,7 +559,7 @@
 			if(nextMolecule){
 				curFileIndex++;
 				curFileIndex = curFileIndex >= dataFileArray.length ? 0 : curFileIndex;
-				init(curFileIndex,autoCameraFlag, polyhedronFlag, dataFileArray);
+				init(dataFileArray[curFileIndex],autoCameraFlag, polyhedronFlag, dataFileArray);
 			}else{
       	requestAnimationFrame(animate);				
 			}
@@ -577,8 +575,6 @@
 			if(e.alpha >= 80 && e.alpha <= 100){
 				nextMolecule = true;
 			}
-				
-				
       window.removeEventListener('deviceorientation', setOrientationControls);
     }
 	
