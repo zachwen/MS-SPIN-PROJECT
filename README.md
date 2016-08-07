@@ -1,6 +1,6 @@
 Molecules Visualizer----(2016 Summer Spin Project)
 This is my summer project in the National Center for Supercomputing Applications as a SPIN program intern.
-This molecules rendering page is based on the source code provided by Nicole Adelstein (nadelstein@gmail.com) and Andre Schleife (schleife@illinois.edu).
+This molecules rendering page is based on the source code(named as originalRenderPage in the root directory)provided by Nicole Adelstein (nadelstein@gmail.com) and Andre Schleife (schleife@illinois.edu).
 
 This project is intended to be a fully working website that has a fully functional backend to store various vesta data files. The front end should be intuitive and allows the user to see different visualized atomic structures in a stereoscopic view via google cardboard.
 
@@ -45,3 +45,8 @@ https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-p
 --------------------------------------Updated in July 17------------------------------------------------------------
 Added routes.js and controllers.js to enable audio playing when rendering molecules
 Support audio upload now, should be able to filter uploaded files according to files uploaded.
+
+--------------------------------------Updated in August 03------------------------------------------------------------
+Support Head Tracking mode, again, head tracking is considered deprecated on insecure origins.
+Support switching bewtweeen different molecules by rotating the mobile phone.
+Upgrade the total logic and structure of handling the molecule files reading and rendering. 
