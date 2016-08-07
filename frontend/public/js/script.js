@@ -243,7 +243,7 @@
         //register this to the window object and therefore can be accessed in the angular controller
 		var MRender = {init : init};
 		window.MRender = MRender;
-		$('#example').append('<p style ="color:red;top:50px;right:10px;position:absolute;font-size:18px" id="alphavalue">300</p>');
+		
     function init(filename,autoFlag, polyFlag, fileArray) {
 			//control flags
 			dataFile = filename;
@@ -259,6 +259,7 @@
       element = renderer.domElement;
 			$('#example').empty();
 			$('#example').append(element);
+      $('#example').append('<p style ="color:red;top:50px;right:10px;position:absolute;font-size:18px" id="alphavalue">300</p>');
       container = document.getElementById('example');
 
       effect = new THREE.StereoEffect(renderer);
