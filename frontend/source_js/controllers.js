@@ -1,7 +1,7 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 mp4Controllers.controller('homePageController', ['$scope','$http', function($scope, $http) {
-	  $scope.curUser = null;
-	  $scope.showLogout = function(){
+      $scope.curUser = null;
+      $scope.showLogout = function(){
         return ($scope.curUser==null) ? false: true;
     }
     $scope.$watch('curUser', function(){
@@ -25,8 +25,8 @@ mp4Controllers.controller('homePageController', ['$scope','$http', function($sco
 
 
 mp4Controllers.controller('renderPageController', ['$scope','$http','$location', function($scope, $http,$location) {
-	
-		//for grid layout
+    
+        //for grid layout
     $scope.filesinfo = [];
     $scope.getFilesinfo = function(){
         $http({
@@ -34,9 +34,9 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             url: '/filesinfo',
         }).success(function (data, status, headers, config) {
             $scope.filesinfo = data.data;
-						data.data.forEach(function(file){
-							$scope.showDel[file] = false;
-						});
+                        data.data.forEach(function(file){
+                            $scope.showDel[file] = false;
+                        });
          }).error(function (data, status, headers, config) {
             console.log("get filesinfo error")
             console.log("data: "+data);
@@ -45,87 +45,64 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
          });           
     };
     $scope.getFilesinfo();
-	
-		//for rendering
-		$scope.audio = {};
-		$scope.spinning = {};
-		$scope.polyhedron = {};
-		$scope.rendering = false;
-	
-		//render
-		$scope.render = function(filename){
-			$http({
-				method: 'GET',
-				url: '../js/script.js',
-			}).success(function (data, status, headers, config) {
-				$scope.rendering = true;	
-				if($scope.polyhedron[filename] === true){
-					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-				}
-				else{
-					data = data.replace(/\.\.\/vesta_files\/[a-z0-9]*/ig,'../vesta_files/'+filename);
-					data = data.replace("createPolyhedron(max_dist,polyhedron,atom_a);",'');
-				}
-				
-				if($scope.spinning[filename] === true){
-					data = data.replace("setAutoControls();","setOrientationControl();");
-					data = data.replace('camera.lookAt( scene.position );','');
-					data = data.replace('camera.lookAt( scene.position );','');
-					
-					data = data.replace('camera.position.x = Math.floor(Math.cos( timer ) * 200 - 250);','');
-					data = data.replace('camera.position.y = Math.floor(Math.cos( timer ) * 200 - 250);','');
-					data = data.replace('camera.position.z = Math.floor(Math.sin( timer ) * 200 - 250);','');
-
-				}
-				if($scope.audio[filename] === true){
-					var audiotag = angular.element(document.querySelector('#molecule_audio'));
-					audiotag.attr('src','./audios/' + filename+ '.mp3');
-				}
-				
-				eval(data); 
-				
-			}).error(function (data, status, headers, config) {
-				console.log("get filesinfo error")
-				console.log("data: "+data);
-				console.log("status: "+status);
-				console.log("headers: "+headers);
-			});
-		};
-	
-		//when render, get rid of grid	  
-		$scope.isRendering = function(){
+    
+        //for rendering
+        $scope.audio = {};
+        $scope.spinning = {};
+        $scope.polyhedron = {};
+        $scope.rendering = false;
+    
+        //render
+        $scope.render = function(filename){
+            $scope.rendering = true;
+            polyFlag = $scope.polyhedron[filename] ? true : false ;
+            autoFlag = $scope.spinning[filename] ? true : false;
+            MRender.init(filename,autoFlag,polyFlag,$scope.filesinfo);
+            
+            //                          if($scope.audio[filename] === true){
+            //                              var audiotag = angular.element(document.querySelector('#molecule_audio'));
+            //                              audiotag.attr('src','./audios/' + filename+ '.mp3');
+            //                              audiotag.load();
+            //                              audiotag.addEventListener("load", function() { 
+            //                                  audiotag.play(); 
+            //                              }, true);
+            //                          }
+        };
+    
+        //when render, get rid of grid    
+        $scope.isRendering = function(){
         return $scope.rendering;
     }
     
     $scope.$watch('rendering', function(){
         $scope.isRendering();
     })
-		
-		$scope.reload = function(){
-			location.reload();
-		}
-		
-		$scope.deleteFiles = function(filename){
-				$scope.showDel[filename] = !$scope.showDel[filename];
+        
+        $scope.reload = function(){
+            location.reload();
+        }
+        
+        $scope.deleteFiles = function(filename){
+                $scope.showDel[filename] = !$scope.showDel[filename];
         $http({
             method: 'POST',
             url: '/delfiles',
-						data:{"filename":filename}
+                        data:{"filename":filename}
         }).success(function (data, status, headers, config) {
 
-						location.reload();
+                        location.reload();
          }).error(function (data, status, headers, config) {
             console.log("get filesinfo error")
             console.log("data: "+data);
             console.log("status: "+status);
             console.log("headers: "+headers);
-         });    			
-			
-			
-		}
-		
-	  $scope.curUser = null;
-	  $scope.showLogout = function(){
+         });                
+            
+            
+        }
+        
+      $scope.curUser = null;
+      $scope.showLogout = function(){
         return ($scope.curUser==null) ? false: true;
     }
     $scope.$watch('curUser', function(){
@@ -144,13 +121,13 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             console.log("headers: "+headers);
          });           
     }
-    $scope.getCurUser();		
-		
-		$scope.showDel = {};
-		$scope.revertDel = function(file){
-			$scope.showDel[file] = !$scope.showDel[file];
-		}
-		
+    $scope.getCurUser();        
+        
+        $scope.showDel = {};
+        $scope.revertDel = function(file){
+            $scope.showDel[file] = !$scope.showDel[file];
+        }
+        
     
 }]);
 
