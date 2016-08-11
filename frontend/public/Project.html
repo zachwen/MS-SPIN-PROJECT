@@ -227,21 +227,26 @@
 				</div>
 				<img src="Images/molecules.jpg" style="border:15px solid #3e2b14;padding:10px;" />
 				<div class="row">
-					<fieldset class="small-4 columns">
+					<fieldset class="small-3 columns">
 						<legend>S</legend>
 						<input type="checkbox" id="SpinningOn_{{file}}" ng-model="spinning[file]">
 						<label for="SpinningOn_{{file}}"></label>
 					</fieldset>
-					<fieldset class="small-4 columns">
+					<fieldset class="small-3 columns">
 						<legend>A</legend>
 						<input type="checkbox" id="AudioOn_{{file}}" ng-model="audio[file]">
 						<label for="AudioOn_{{file}}"></label>
 					</fieldset>
-					<fieldset class="small-4 columns">
+					<fieldset class="small-3 columns">
 						<legend>P</legend>
 						<input type="checkbox" id="PolyhedronOn_{{file}}" ng-model="polyhedron[file]">
 						<label for="PolyhedronOn_{{file}}"></label>
 					</fieldset>
+					<fieldset class="small-3 columns">
+						<legend>T</legend>
+						<input type="checkbox" id="selected{{file}}" ng-model="selected[file]">
+						<label for="selected{{file}}"></label>
+					</fieldset>            
 				</div>
 				<button class="expanded button render" id="{{file}}" ng-click="render(file)">Render</button>
 			</div>

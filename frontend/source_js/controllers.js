@@ -25,8 +25,11 @@ mp4Controllers.controller('homePageController', ['$scope','$http', function($sco
 
 
 mp4Controllers.controller('renderPageController', ['$scope','$http','$location', function($scope, $http,$location) {
+    //for group selection 
+    $scope.loopfiles = [];
+    $scope.selected = {};
     
-        //for grid layout
+    //for grid layout
     $scope.filesinfo = [];
     $scope.getFilesinfo = function(){
         $http({
@@ -46,31 +49,35 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     };
     $scope.getFilesinfo();
     
-        //for rendering
-        $scope.audio = {};
-        $scope.spinning = {};
-        $scope.polyhedron = {};
-        $scope.rendering = false;
+    //for rendering
+    $scope.audio = {};
+    $scope.spinning = {};
+    $scope.polyhedron = {};
+    $scope.rendering = false;
     
         //render
-        $scope.render = function(filename){
-            $scope.rendering = true;
-            polyFlag = $scope.polyhedron[filename] ? true : false ;
-            autoFlag = $scope.spinning[filename] ? true : false;
+    $scope.render = function(filename){
+        $scope.rendering = true;
+        polyFlag = $scope.polyhedron[filename] ? true : false ;
+        autoFlag = $scope.spinning[filename] ? true : false;
+        if($scope.selected.length > 1){
+            MRender.init(filename,autoFlag,polyFlag,$scope.selected);    
+        }else{
             MRender.init(filename,autoFlag,polyFlag,$scope.filesinfo);
+        }
             
-            //                          if($scope.audio[filename] === true){
-            //                              var audiotag = angular.element(document.querySelector('#molecule_audio'));
-            //                              audiotag.attr('src','./audios/' + filename+ '.mp3');
-            //                              audiotag.load();
-            //                              audiotag.addEventListener("load", function() { 
-            //                                  audiotag.play(); 
-            //                              }, true);
-            //                          }
-        };
+        //                          if($scope.audio[filename] === true){
+        //                              var audiotag = angular.element(document.querySelector('#molecule_audio'));
+        //                              audiotag.attr('src','./audios/' + filename+ '.mp3');
+        //                              audiotag.load();
+        //                              audiotag.addEventListener("load", function() { 
+        //                                  audiotag.play(); 
+        //                              }, true);
+        //                          }
+    };
     
-        //when render, get rid of grid    
-        $scope.isRendering = function(){
+    //when render, get rid of grid    
+    $scope.isRendering = function(){
         return $scope.rendering;
     }
     
@@ -78,31 +85,31 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
         $scope.isRendering();
     })
         
-        $scope.reload = function(){
-            location.reload();
-        }
-        
-        $scope.deleteFiles = function(filename){
-                $scope.showDel[filename] = !$scope.showDel[filename];
-        $http({
-            method: 'POST',
-            url: '/delfiles',
-                        data:{"filename":filename}
-        }).success(function (data, status, headers, config) {
+    $scope.reload = function(){
+        location.reload();
+    }
 
-                        location.reload();
-         }).error(function (data, status, headers, config) {
-            console.log("get filesinfo error")
-            console.log("data: "+data);
-            console.log("status: "+status);
-            console.log("headers: "+headers);
-         });                
-            
-            
-        }
+    $scope.deleteFiles = function(filename){
+            $scope.showDel[filename] = !$scope.showDel[filename];
+    $http({
+        method: 'POST',
+        url: '/delfiles',
+                    data:{"filename":filename}
+    }).success(function (data, status, headers, config) {
+
+                    location.reload();
+     }).error(function (data, status, headers, config) {
+        console.log("get filesinfo error")
+        console.log("data: "+data);
+        console.log("status: "+status);
+        console.log("headers: "+headers);
+     });                
+
+
+    }
         
-      $scope.curUser = null;
-      $scope.showLogout = function(){
+    $scope.curUser = null;
+    $scope.showLogout = function(){
         return ($scope.curUser==null) ? false: true;
     }
     $scope.$watch('curUser', function(){
@@ -123,10 +130,10 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     }
     $scope.getCurUser();        
         
-        $scope.showDel = {};
-        $scope.revertDel = function(file){
-            $scope.showDel[file] = !$scope.showDel[file];
-        }
+    $scope.showDel = {};
+    $scope.revertDel = function(file){
+        $scope.showDel[file] = !$scope.showDel[file];
+    }
         
     
 }]);
