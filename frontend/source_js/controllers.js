@@ -1,7 +1,7 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 mp4Controllers.controller('homePageController', ['$scope','$http', function($scope, $http) {
-      $scope.curUser = null;
-      $scope.showLogout = function(){
+    $scope.curUser = null;
+    $scope.showLogout = function(){
         return ($scope.curUser==null) ? false: true;
     }
     $scope.$watch('curUser', function(){
@@ -13,12 +13,12 @@ mp4Controllers.controller('homePageController', ['$scope','$http', function($sco
             url: '/user',
         }).success(function (data, status, headers, config) {
             $scope.curUser=data.data;
-         }).error(function (data, status, headers, config) {
+        }).error(function (data, status, headers, config) {
             console.log("get user error")
             console.log("data: "+data);
             console.log("status: "+status);
             console.log("headers: "+headers);
-         });           
+        });           
     }
     $scope.getCurUser();
 }]);
@@ -40,12 +40,12 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
                         data.data.forEach(function(file){
                             $scope.showDel[file] = false;
                         });
-         }).error(function (data, status, headers, config) {
+        }).error(function (data, status, headers, config) {
             console.log("get filesinfo error")
             console.log("data: "+data);
             console.log("status: "+status);
             console.log("headers: "+headers);
-         });           
+        });           
     };
     $scope.getFilesinfo();
     
@@ -60,8 +60,11 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
         $scope.rendering = true;
         polyFlag = $scope.polyhedron[filename] ? true : false ;
         autoFlag = $scope.spinning[filename] ? true : false;
-        if($scope.selected.length > 1){
-            MRender.init(filename,autoFlag,polyFlag,$scope.selected);    
+        for (var key in $scope.selected){
+            $scope.loopfiles.push(key);
+        }
+        if($scope.loopfiles.length > 1){
+            MRender.init(filename,autoFlag,polyFlag,$scope.loopfiles);    
         }else{
             MRender.init(filename,autoFlag,polyFlag,$scope.filesinfo);
         }
@@ -90,22 +93,19 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     }
 
     $scope.deleteFiles = function(filename){
-            $scope.showDel[filename] = !$scope.showDel[filename];
-    $http({
-        method: 'POST',
-        url: '/delfiles',
-                    data:{"filename":filename}
-    }).success(function (data, status, headers, config) {
-
-                    location.reload();
-     }).error(function (data, status, headers, config) {
-        console.log("get filesinfo error")
-        console.log("data: "+data);
-        console.log("status: "+status);
-        console.log("headers: "+headers);
-     });                
-
-
+        $scope.showDel[filename] = !$scope.showDel[filename];
+        $http({
+            method: 'POST',
+            url: '/delfiles',
+            data:{"filename":filename}
+        }).success(function (data, status, headers, config) {
+            location.reload();
+        }).error(function (data, status, headers, config) {
+            console.log("get filesinfo error")
+            console.log("data: "+data);
+            console.log("status: "+status);
+            console.log("headers: "+headers);
+        });                
     }
         
     $scope.curUser = null;
@@ -121,12 +121,12 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             url: '/user',
         }).success(function (data, status, headers, config) {
             $scope.curUser=data.data;
-         }).error(function (data, status, headers, config) {
+        }).error(function (data, status, headers, config) {
             console.log("get user error")
             console.log("data: "+data);
             console.log("status: "+status);
             console.log("headers: "+headers);
-         });           
+        });           
     }
     $scope.getCurUser();        
         
@@ -134,7 +134,5 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     $scope.revertDel = function(file){
         $scope.showDel[file] = !$scope.showDel[file];
     }
-        
-    
 }]);
 
