@@ -266,7 +266,7 @@
       scene = new THREE.Scene();
 
       camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 1000 );
-      camera.position.set(30, 300, 40);
+      camera.position.set(30, 100, -250);
 			if(autoCameraFlag){
 					camera.lookAt(scene.position);  
 			}

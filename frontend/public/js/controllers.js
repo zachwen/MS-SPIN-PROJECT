@@ -60,8 +60,11 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
         $scope.rendering = true;
         polyFlag = $scope.polyhedron[filename] ? true : false ;
         autoFlag = $scope.spinning[filename] ? true : false;
-        if($scope.selected.length > 1){
-            MRender.init(filename,autoFlag,polyFlag,$scope.selected);    
+        for (var key in $scope.selected){
+	    $scope.loopfiles.push(key);
+	}
+	if($scope.loopfiles.length > 1){
+            MRender.init(filename,autoFlag,polyFlag,$scope.loopfiles);    
         }else{
             MRender.init(filename,autoFlag,polyFlag,$scope.filesinfo);
         }
@@ -94,7 +97,7 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     $http({
         method: 'POST',
         url: '/delfiles',
-                    data:{"filename":filename}
+        data:{"filename":filename}
     }).success(function (data, status, headers, config) {
 
                     location.reload();
