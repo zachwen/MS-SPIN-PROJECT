@@ -1,4 +1,5 @@
 Molecules Visualizer----(2016 Summer Spin Project)
+
 This is my summer project in the National Center for Supercomputing Applications as a SPIN program intern.
 This molecules rendering page is based on the source code(named as originalRenderPage in the root directory)provided by Nicole Adelstein (nadelstein@gmail.com) and Andre Schleife (schleife@illinois.edu).
 
@@ -72,7 +73,11 @@ The easiest way to guarantee the same environment, run sh install.sh in the serv
 
 3.Install local packages - type 'npm install' under the MS-SPIN-Project folder(where the package.json is)  
 
-4.Run the server - type 'node server.js' under the MS-SPIN-Project folder(where the server.js is)
+4.Detach a screen to run the server. - type 'screen'
+
+5.Run the server - type 'node server.js' under the MS-SPIN-Project folder(where the server.js is) and then type ctrl a and then ctrl d. The terminal should display screen detached. 
+
+Side notice: When used in outreach event, take out the signup link in frontend/public/index.html around line 76.
 
 Most backend configurations are under the MS-SPIN-Project folder:
 
