@@ -37,9 +37,9 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
             url: '/filesinfo',
         }).success(function (data, status, headers, config) {
             $scope.filesinfo = data.data;
-                        data.data.forEach(function(file){
-                            $scope.showDel[file] = false;
-                        });
+            data.data.forEach(function(file){
+                $scope.showDel[file] = false;
+            });
         }).error(function (data, status, headers, config) {
             console.log("get filesinfo error")
             console.log("data: "+data);
@@ -55,7 +55,7 @@ mp4Controllers.controller('renderPageController', ['$scope','$http','$location',
     $scope.polyhedron = {};
     $scope.rendering = false;
     
-        //render
+    //render
     $scope.render = function(filename){
         $scope.rendering = true;
         polyFlag = $scope.polyhedron[filename] ? true : false ;

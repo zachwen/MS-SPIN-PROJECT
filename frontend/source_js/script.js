@@ -270,14 +270,14 @@
         camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 1000 );
         camera.position.set(30, 100, -250);
         if(autoCameraFlag){
-                camera.lookAt(scene.position);  
+            camera.lookAt(scene.position);  
         }
         scene.add(camera);
 
         if(autoCameraFlag){
-                setAutoControls();
+            setAutoControls();
         }else{
-                setOrientationControl();
+            setOrientationControl();
         }
 
         var light = new THREE.HemisphereLight(0xffffff, 0x000000, 0.6);
@@ -561,7 +561,7 @@
         if(nextMolecule){
             curFileIndex++;
             curFileIndex = curFileIndex >= dataFileArray.length ? 0 : curFileIndex;
-            init(dataFileArray[curFileIndex],autoCameraFlag, polyhedronFlag, dataFileArray);
+            setTimeout(function(){init(dataFileArray[curFileIndex],autoCameraFlag, polyhedronFlag, dataFileArray);}, 1500);           
         }else{
             requestAnimationFrame(animate);             
         }
@@ -573,8 +573,8 @@
         if (!e.alpha) {
             return;
         }
-        $('#alphavalue').text(e.alpha);
-        if(e.alpha >= 80 && e.alpha <= 100){
+        $('#alphavalue').text(e.gamma);
+        if(e.gamma >= 80 && e.gamma <= 100){
             //only change molecules after 3 seconds of last change
             var curtime = new Date().getTime();
             if(curtime-lastChangeTime > 3000){
