@@ -66,8 +66,11 @@ Structures break down(For future maintenance and update):
 I am using Mean stack to build this website, Mongo db, express.js, and node.js is required to run this project.
 
 1.Clone the repository - git clone git@github.com:Randolph-zeng/MS-SPIN-PROJECT.git
+
 2.Install Node.js
+
 3.Install packages - type 'npm install' under the MS-SPIN-Project folder(where the package.json is)  
+
 4.Run the server - type 'node server.js' under the MS-SPIN-Project folder(where the server.js is)
 
 Most backend configurations are under the MS-SPIN-Project folder:
