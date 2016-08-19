@@ -1,3 +1,8 @@
+
+"This software was developed with support from NCSA through the Students
+Pushing Innovation (SPIN) program and this material is based upon work
+supported by the National Science Foundation under Grant No. DMR-1555153.
+
 Molecules Visualizer----(2016 Summer Spin Project)
 
 This is my summer project in the National Center for Supercomputing Applications as a SPIN program intern.
