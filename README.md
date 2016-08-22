@@ -1,7 +1,11 @@
 
 "This software was developed with support from NCSA through the Students
 Pushing Innovation (SPIN) program and this material is based upon work
-supported by the National Science Foundation under Grant No. DMR-1555153.
+supported by the National Science Foundation under Grant No. DMR-1555153."
+
+For a fully functioning experience, you mobile browser version must match at least one of the following criteria.    
+Feature	 		Android	Firefox IE Phone	Opera 	Safari  Chrome
+Basic support	3.0		3.6		No support	12		4.2		50
 
 Molecules Visualizer----(2016 Summer Spin Project)
 
