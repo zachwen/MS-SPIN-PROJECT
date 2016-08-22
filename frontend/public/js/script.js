@@ -573,8 +573,8 @@
         if (!e.alpha) {
             return;
         }
-        $('#alphavalue').text(e.gamma);
-        if(e.gamma >= 80 && e.gamma <= 100){
+        $('#alphavalue').text(e.alpha);
+        if(e.alpha >= 80 && e.alpha <= 100){
             //only change molecules after 3 seconds of last change
             var curtime = new Date().getTime();
             if(curtime-lastChangeTime > 3000){
