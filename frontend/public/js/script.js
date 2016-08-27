@@ -573,7 +573,7 @@
         if (!e.alpha) {
             return;
         }
-        $('#alphavalue').text(e.alpha);
+        $('#alphavalue').text(getMobileOperatingSystem());
         if(e.alpha >= 80 && e.alpha <= 100){
             //only change molecules after 3 seconds of last change
             var curtime = new Date().getTime();
@@ -595,6 +595,29 @@
         container.webkitRequestFullscreen();
       }
     }
+	
+		function getMobileOperatingSystem() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+					// Windows Phone must come first because its UA also contains "Android"
+				if (/windows phone/i.test(userAgent)) {
+						return "Windows Phone";
+				}
+
+				if (/android/i.test(userAgent)) {
+						return "Android";
+				}
+
+				// iOS detection from: http://stackoverflow.com/a/9039885/177710
+				if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+						return "iOS";
+				}
+
+				return "unknown";
+		}	
+	
+	
+	
 },{"alpha-shape":2}],2:[function(require,module,exports){
 module.exports = alphaShape
 
