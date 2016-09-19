@@ -262,7 +262,11 @@
         $('#example').empty();
         $('#example').append(element);
         $('#example').append('<p style ="color:red;top:50px;right:10px;position:absolute;font-size:18px" id="alphavalue">300</p>');
-        container = document.getElementById('example');
+	$('#example').append('<p style ="color:red;top:68px;right:10px;position:absolute;font-size:18px" id="betavalue">300</p>');
+	$('#example').append('<p style ="color:red;top:86px;right:10px;position:absolute;font-size:18px" id="gammavalue">300</p>');
+        $('exampe')
+	
+	container = document.getElementById('example');
 
         effect = new THREE.StereoEffect(renderer);
         scene = new THREE.Scene();
@@ -573,8 +577,11 @@
         if (!e.alpha) {
             return;
         }
-        $('#alphavalue').text(getMobileOperatingSystem());
-        if(e.alpha >= 80 && e.alpha <= 100){
+        $('#alphavalue').text(e.alpha);
+        $('#betavalue').text(e.beta);
+	$('#gammavalue').text(e.gamma);
+
+	if(e.alpha >= 80 && e.alpha <= 100){
             //only change molecules after 3 seconds of last change
             var curtime = new Date().getTime();
             if(curtime-lastChangeTime > 3000){

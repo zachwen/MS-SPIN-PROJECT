@@ -22,7 +22,7 @@
 		<div id=example style=position:absolute; ></div>
 		
 		<script src="./lib/third-party/threejs/three.min.js"></script>
-		<script src="./lib/third-party/threejs/OrbitControls.js"></script>
+		<script src="./lib/third-party/threejs/FlyControls.js"></script>
 		<script src="./lib/third-party/threejs/StereoEffect.js"></script>
 		<script src="./lib/third-party/threejs/DeviceOrientationControls.js"></script>	
 		<script>
@@ -33,6 +33,7 @@
 			var video,videoImage,videoTexture;
 			var container;
 			var isIos = false;
+			var pause = false;
 			function init(){
 				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 2048 );
@@ -63,7 +64,7 @@
 					controls.connect();
 					controls.update();
 				}else{
-					controls = new THREE.OrbitControls(camera,renderer.domElement);
+					controls = new THREE.FlyControls(camera);
 					controls.movementSpeed = 100;
 					controls.rollSpeed = Math.PI / 24;
 					controls.autoForward = false;
@@ -100,7 +101,7 @@
 				var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, side:THREE.BackSide } );
 				// the geometry on which the movie will be displayed;
 				// 		movie image will be scaled to fit these dimensions.
-				var movieGeometry = new THREE.SphereGeometry(500,32,32,Math.PI,Math.PI*2, 0, Math.PI);
+				var movieGeometry = new THREE.SphereGeometry(500,32,32,Math.PI,Math.PI, 0, Math.PI);
 				movieGeometry.center();
 		
 				var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
@@ -134,8 +135,6 @@
 									zmin=varray[i].z			
 							}
 						}
-						console.log(zmin);
-						console.log(zmax);
 						var xrange = (xmax-xmin)/2;
 						var yrange = (ymax-ymin)/2;
 						var zrange = (zmax-zmin)/2;
@@ -176,10 +175,25 @@
 				camera.lookAt(new THREE.Vector3(1,0,0));			
 
 				window.addEventListener('resize', resize, false);
-				setTimeout(resize, 1);   				
+				setTimeout(resize, 1);
+				window.addEventListener('keypress',pauseFun);   				
 
 				
 				
+			}
+			function pauseFun(){
+				var key = '';
+				if(event.which == null){
+					key = String.fromCharCode(event.keyCode);
+				}else if(event.which!=0 && event.charCode !=0){
+					key = String.fromCharCode(event.which);
+				}
+				if(key == 'p'){
+					pause = !pause;
+					if(pause){video.pause();}else{video.play();}
+				}
+
+
 			}	
 			
     
@@ -199,7 +213,7 @@
 				if(isIos){
 					video.currentTime = video.currentTime + 0.05;
 				}
-				if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+				if ( video.readyState === video.HAVE_ENOUGH_DATA && !pause) 
 				{
 					videoImageContext.drawImage( video, 0, 0 );
 					if ( videoTexture ){
@@ -209,7 +223,7 @@
 				resize();
 				var delta = clock.getDelta();
 				camera.updateProjectionMatrix();
-				controls.update( );
+				controls.update(delta );
 				effect.render( scene, camera);
 				renderer.setClearColor(0xffffff, 1);
 			};
