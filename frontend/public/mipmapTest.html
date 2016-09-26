@@ -92,8 +92,10 @@
 			var container;
 			var isIos = false;
 			var pause = false;
+
 			
 			function init(angle,distance,filePath){
+
 				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 2048 );
 				
@@ -165,9 +167,12 @@
 				var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
 				movieScreen.position.set(0,0,0);
 				
+
 				movieGeometry.uvsNeedUpdate = true;
 				var domeradius = Math.PI/2;
 				var faceVertexUvs = movieGeometry.faceVertexUvs[ 0 ];
+				
+
 
 				var xmin,xmax,ymin,ymax,zmin,zmax;
 				xmin = Number.MAX_SAFE_INTEGER ;
@@ -358,9 +363,6 @@
 				
 			});			
 			
-			
-			//init();
-			//render();	
 			
 		</script>
 	</body>
