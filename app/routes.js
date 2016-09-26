@@ -6,14 +6,7 @@ var mime = require('mime');
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		var extension = file.originalname.split(/[. ]+/).pop();
-		var mimetype = mime.lookup(extension);
-		var prefix = mimetype.split('/')[0];
-		if(extension==='xyz' || extension === 'vesta'){
-			cb(null, 'frontend/public/vesta_files/');					
-		}else if( prefix ==='audio'){
 			cb(null, 'frontend/public/audios/');
-		}	
 	},
 	filename: function (req, file, cb) {
     //not necessary here, just in case files would be required to rename, this function would be useful then  
@@ -21,18 +14,7 @@ var storage = multer.diskStorage({
 	}
 });
 
-var fileFilter = function(req,file,cb){
-		var extension = file.originalname.split(/[. ]+/).pop();
-		var mimetype = mime.lookup(extension);
-		var prefix = mimetype.split('/')[0];
-		if(extension==='xyz' || extension === 'vesta' ||  prefix ==='audio' ){
-			cb(null, true);					
-		}else{
-			cb(null,false);
-		}		
-}
-
-var upload = multer({ storage: storage, fileFilter:fileFilter});
+var upload = multer({ storage: storage});
 
 module.exports = function(app, passport) {
 

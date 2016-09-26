@@ -3,6 +3,7 @@
 		<meta charset="utf-8">
 		<title>Simple Three.js app</title>
     <style>
+/*
       body {
         margin: 0px;
         overflow: hidden;
@@ -14,15 +15,72 @@
         right: 0;
         bottom: 0;
       }
+*/
     </style>
+		<link rel="stylesheet" type="text/css" href="./css/dome.css">
 		<script src="./lib/jquery-2.1.3.min/index.js"></script>
 	</head>
 	<body>
 		
 		<div id=example style=position:absolute; ></div>
-		
+		<div id="interface">
+			<h1>Dome Projector</h1>
+			<h2>Please fill in the form before render:</h2>
+			<form>
+				<div class="floating-placeholder">
+					<input id="angle" name="angle" type="number"/>
+					<label for="angle">Dome Angle Around X-axis</label>
+				</div>
+				<div class="floating-placeholder">
+					<input id="distance" name="distance" type="number" />
+					<label for="distance">Distance to Dome Center </label>
+				</div>
+				<div class="floating-placeholder">
+					<input id="Resolution" name="Resolution" type="text"/>
+					<label for="Resolution">Resolution</label>
+				</div>
+				<div>
+							<div class="dropdown closed">
+								<div class="title">Select Preview Movie</div>
+								<div class="dropdown-menu">
+								<ul>
+									<li>Henry Christensen</li>
+									<li>Imelda Silva</li>
+									<li>Marah Mueller</li>
+									<li>Holly Fitzpatrick</li>
+									<li>Lamar Flynn</li>
+									<li>Jameson Davidson</li>
+									<li>Harper Lynn</li>
+									<li>Keith Woods</li>
+									<li>Cally Dominguez</li>
+									<li>Carter Gould</li>
+									<li>Brenna Sutton</li>
+									<li>Robert Vang</li>
+									<li>Lane Shepard</li>
+									<li>Ila Shepard</li>
+									<li>Madaline Mccarthy</li>
+									<li>Raya King</li>
+									<li>Tara Schroeder</li>
+									<li>Paloma Bryan</li>
+									<li>Trevor Heath</li>
+									<li>Raymond Vega</li>
+									<li>Nyssa Mcleod</li>
+									<li>Zachary Deleon</li>
+									<li>Guy Morales</li>
+									<li>Gannon Kline</li>
+									<li>Clare Floyd</li>
+								</ul>
+								</div>
+							</div>
+				</div>
+			</form>
+
+			<div><a href="#" class="button outline center" id="render">Render The Movie!</a></div>
+
+			<a href="http://codepen.io/lbebber/">Interface inspired by Lucas Bebber and Hampus Persson</a> <br />
+		</div>
 		<script src="./lib/third-party/threejs/three.min.js"></script>
-		<script src="./lib/third-party/threejs/OrbitControls.js"></script>
+		<script src="./lib/third-party/threejs/FlyControls.js"></script>
 		<script src="./lib/third-party/threejs/StereoEffect.js"></script>
 		<script src="./lib/third-party/threejs/DeviceOrientationControls.js"></script>	
 		<script>
@@ -33,21 +91,22 @@
 			var video,videoImage,videoTexture;
 			var container;
 			var isIos = false;
-			function init(){
+			var pause = false;
+			
+			function init(angle,distance,filePath){
 				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 2048 );
-				camera.position.set(0,0,400);
-      				scene.add(camera);				
+				
+				console.log(distance);
+				console.log(typeof(distance) );
+				camera.position.set(0,0,parseInt(distance));
+      	scene.add(camera);				
 		
 				renderer = new THREE.WebGLRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container = document.getElementById('example');
 				container.appendChild(renderer.domElement);
 				effect = new THREE.StereoEffect(renderer);
-
-
-
-
 
 				var isMobile = false; 
 				// device detection
@@ -63,7 +122,7 @@
 					controls.connect();
 					controls.update();
 				}else{
-					controls = new THREE.OrbitControls(camera,renderer.domElement);
+					controls = new THREE.FlyControls(camera);
 					controls.movementSpeed = 100;
 					controls.rollSpeed = Math.PI / 24;
 					controls.autoForward = false;
@@ -76,7 +135,7 @@
 
 				// create the video element
 				video = document.createElement( 'video' );
-				video.src = "./audios/test.mp4";
+				video.src = filePath ;
 				video.preload = "auto"; 
 				video.load(); // must call after setting/changing source
 				video.play();
@@ -100,86 +159,100 @@
 				var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, side:THREE.BackSide } );
 				// the geometry on which the movie will be displayed;
 				// 		movie image will be scaled to fit these dimensions.
-				var movieGeometry = new THREE.SphereGeometry(500,32,32,Math.PI,Math.PI*2, 0, Math.PI);
+				var movieGeometry = new THREE.SphereGeometry(500,32,32,Math.PI,Math.PI, 0, Math.PI);
 				movieGeometry.center();
 		
 				var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
 				movieScreen.position.set(0,0,0);
 				
-						movieGeometry.uvsNeedUpdate = true;
-						var domeradius = Math.PI/2;
-						var faceVertexUvs = movieGeometry.faceVertexUvs[ 0 ];
-				
-						var xmin,xmax,ymin,ymax,zmin,zmax;
-						xmin = Number.MAX_SAFE_INTEGER ;
-						ymin = Number.MAX_SAFE_INTEGER ;
-						zmin = Number.MAX_SAFE_INTEGER ;
-						xmax = Number.MIN_SAFE_INTEGER  ;
-						ymax = Number.MIN_SAFE_INTEGER ;
-						zmax = Number.MIN_SAFE_INTEGER ;
-						varray = movieGeometry.vertices;
-						for ( i = 0; i < varray.length; i ++ ) {
-							for ( var j = 0; j < 3; j ++ ) {
-								if(varray[i].x > xmax)
-									xmax=varray[i].x
-								if(varray[i].y > ymax)
-									ymax=varray[i].y
-								if(varray[i].z > zmax)
-									zmax=varray[i].z
-								if(varray[i].x < xmin)
-									xmin=varray[i].x
-								if(varray[i].y < ymin)
-									ymin=varray[i].y
-								if(varray[i].z < zmin)
-									zmin=varray[i].z			
-							}
-						}
-						console.log(zmin);
-						console.log(zmax);
-						var xrange = (xmax-xmin)/2;
-						var yrange = (ymax-ymin)/2;
-						var zrange = (zmax-zmin)/2;
-						for ( i = 0; i < faceVertexUvs.length; i ++ ) {
+				movieGeometry.uvsNeedUpdate = true;
+				var domeradius = Math.PI/2;
+				var faceVertexUvs = movieGeometry.faceVertexUvs[ 0 ];
 
-							var uvs = faceVertexUvs[ i ];
-							var face = movieGeometry.faces[ i ];
-							var X,Y,Z,rxy,frac;
-							for ( var j = 0; j < 3; j ++ ) {
-								if(j == 0){
-									X = movieGeometry.vertices[face.a].x/xrange;
-									Y = movieGeometry.vertices[face.a].y/yrange;
-									Z = (movieGeometry.vertices[face.a].z/zrange-1)*0.5;
-				      		rxy = Math.sqrt( X*X + Y*Y );
-    							frac = Math.atan2( rxy, -Z) / domeradius;
-								}else if(j == 1) {
-									X = movieGeometry.vertices[face.b].x/xrange;
-									Y = movieGeometry.vertices[face.b].y/yrange;
-									Z = (movieGeometry.vertices[face.b].z/zrange-1)*0.5;
-				      		rxy = Math.sqrt( X*X + Y*Y );
-    							frac = Math.atan2( rxy,-Z) / domeradius;  
-								}else{
-									X = movieGeometry.vertices[face.c].x/xrange;
-									Y = movieGeometry.vertices[face.c].y/yrange;
-									Z = (movieGeometry.vertices[face.c].z/zrange-1)*0.5;
-				      		rxy = Math.sqrt( X*X + Y*Y );
-    							frac = Math.atan2( rxy, -Z) / domeradius;  
-								}
-								
-								uvs[ j ].x =  0.5 + 0.5 * frac * X / rxy;
-								uvs[ j ].y =  0.5 + 0.5 * frac * Y / rxy;	
-							}
-						}				
+				var xmin,xmax,ymin,ymax,zmin,zmax;
+				xmin = Number.MAX_SAFE_INTEGER ;
+				ymin = Number.MAX_SAFE_INTEGER ;
+				zmin = Number.MAX_SAFE_INTEGER ;
+				xmax = Number.MIN_SAFE_INTEGER  ;
+				ymax = Number.MIN_SAFE_INTEGER ;
+				zmax = Number.MIN_SAFE_INTEGER ;
+				varray = movieGeometry.vertices;
+				for ( i = 0; i < varray.length; i ++ ) {
+					for ( var j = 0; j < 3; j ++ ) {
+						if(varray[i].x > xmax)
+							xmax=varray[i].x
+						if(varray[i].y > ymax)
+							ymax=varray[i].y
+						if(varray[i].z > zmax)
+							zmax=varray[i].z
+						if(varray[i].x < xmin)
+							xmin=varray[i].x
+						if(varray[i].y < ymin)
+							ymin=varray[i].y
+						if(varray[i].z < zmin)
+							zmin=varray[i].z			
+					}
+				}
+				var xrange = (xmax-xmin)/2;
+				var yrange = (ymax-ymin)/2;
+				var zrange = (zmax-zmin)/2;
+				for ( i = 0; i < faceVertexUvs.length; i ++ ) {
+
+					var uvs = faceVertexUvs[ i ];
+					var face = movieGeometry.faces[ i ];
+					var X,Y,Z,rxy,frac;
+					for ( var j = 0; j < 3; j ++ ) {
+						if(j == 0){
+							X = movieGeometry.vertices[face.a].x/xrange;
+							Y = movieGeometry.vertices[face.a].y/yrange;
+							Z = (movieGeometry.vertices[face.a].z/zrange-1)*0.5;
+							rxy = Math.sqrt( X*X + Y*Y );
+							frac = Math.atan2( rxy, -Z) / domeradius;
+						}else if(j == 1) {
+							X = movieGeometry.vertices[face.b].x/xrange;
+							Y = movieGeometry.vertices[face.b].y/yrange;
+							Z = (movieGeometry.vertices[face.b].z/zrange-1)*0.5;
+							rxy = Math.sqrt( X*X + Y*Y );
+							frac = Math.atan2( rxy,-Z) / domeradius;  
+						}else{
+							X = movieGeometry.vertices[face.c].x/xrange;
+							Y = movieGeometry.vertices[face.c].y/yrange;
+							Z = (movieGeometry.vertices[face.c].z/zrange-1)*0.5;
+							rxy = Math.sqrt( X*X + Y*Y );
+							frac = Math.atan2( rxy, -Z) / domeradius;  
+						}
+
+						uvs[ j ].x =  0.5 + 0.5 * frac * X / rxy;
+						uvs[ j ].y =  0.5 + 0.5 * frac * Y / rxy;	
+					}
+				}				
 				
 				scene.add(movieScreen);
-
-
-				camera.lookAt(new THREE.Vector3(1,0,0));			
-
+				movieScreen.rotateOnAxis(new THREE.Vector3(1,0,0),parseInt(angle)*Math.PI/180);
+				camera.position.y = -Math.sin(parseInt(angle)*Math.PI/180) * parseInt(distance);
+				camera.position.z = Math.cos(parseInt(angle)*Math.PI/180) * parseInt(distance);
+				camera.lookAt(new THREE.Vector3(0,0,0));			
+				console.log(camera.position);
 				window.addEventListener('resize', resize, false);
-				setTimeout(resize, 1);   				
+				setTimeout(resize, 1);
+				window.addEventListener('keypress',pauseFun);   				
 
 				
 				
+			}
+			function pauseFun(){
+				var key = '';
+				if(event.which == null){
+					key = String.fromCharCode(event.keyCode);
+				}else if(event.which!=0 && event.charCode !=0){
+					key = String.fromCharCode(event.which);
+				}
+				if(key == 'p'){
+					pause = !pause;
+					if(pause){video.pause();}else{video.play();}
+				}
+
+
 			}	
 			
     
@@ -199,7 +272,7 @@
 				if(isIos){
 					video.currentTime = video.currentTime + 0.05;
 				}
-				if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+				if ( video.readyState === video.HAVE_ENOUGH_DATA && !pause) 
 				{
 					videoImageContext.drawImage( video, 0, 0 );
 					if ( videoTexture ){
@@ -209,12 +282,85 @@
 				resize();
 				var delta = clock.getDelta();
 				camera.updateProjectionMatrix();
-				controls.update( );
+				controls.update(delta );
 				effect.render( scene, camera);
 				renderer.setClearColor(0xffffff, 1);
 			};
-			init();
-			render();	
+			
+
+			$(document).ready(function(){
+			//This code is a bit rudimentary.
+			//This is more of a proof of concept than code for production.
+			//The only thing it needs to do, however, is to check if the field has any value. The rest is done with CSS
+			//FORM
+				function updateText(event){
+					var input=$(this);
+					setTimeout(function(){
+						var val=input.val();
+						if(val!="")
+							input.parent().addClass("floating-placeholder-float");
+						else
+							input.parent().removeClass("floating-placeholder-float");
+					},1)
+				}
+				$(".floating-placeholder input").keydown(updateText);
+				$(".floating-placeholder input").change(updateText);
+				
+				//DROPDOWN
+				var $container = $('.dropdown-menu'),
+						$list = $('.dropdown-menu ul'),
+						listItem = $list.find('li');
+
+				$(".dropdown .title").click(function () {
+					if( $container.height() > 0) {
+						closeMenu(this);
+					} else {
+						openMenu(this);
+					}
+				});
+
+				$(".dropdown-menu li").click(function () {
+					closeMenu(this);
+				});
+
+				function closeMenu(el) {
+					$(el).closest('.dropdown').toggleClass("closed").find(".title").text($(el).text());
+					$container.css("height", 0);
+					$list.css( "top", 0 );
+				}
+
+				function openMenu(el) {
+					$(el).parent().toggleClass("closed");
+
+					$container.css({
+						height: 200
+					})
+					.mousemove(function(e) {
+						var heightDiff = $list.height() / $container.height(),
+								offset = $container.offset(),
+								relativeY = (e.pageY - offset.top),
+								top = relativeY*heightDiff > $list.height()-$container.height() ?
+											$list.height()-$container.height() : relativeY*heightDiff;
+
+						$list.css("top", -top);
+					});
+				}				
+				
+				$('#render').click(function(){
+						var angle = $("#angle").val();
+						var distance = $("#distance").val();
+						var filePath = "./audios/dome1.mp4";
+						init(angle,distance,filePath);
+						$("#interface").css("display","none");
+						render();
+				});
+	
+				
+			});			
+			
+			
+			//init();
+			//render();	
 			
 		</script>
 	</body>
